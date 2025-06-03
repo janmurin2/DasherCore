@@ -21,6 +21,7 @@
 #pragma once
 
 #include "../Common/ModuleSettings.h"
+#include <memory>
 #include <vector>
 
 class CDasherModule;
@@ -38,11 +39,20 @@ public:
         return false;
     }
 
-    virtual const std::vector<Dasher::Settings::ModuleSetting>& getUISettings(){return UIList;};
 private:
     const char *m_szName;
-protected:
-    std::vector<Dasher::Settings::ModuleSetting> UIList;
+
+// "New" UI Settings definitions:
+public:
+    virtual const std::vector<std::unique_ptr<Dasher::Settings::ModuleSetting>>& getUISettings(){return UISettingsList;};
+    virtual void declareTextboxSetting(Dasher::Parameter Param, std::string Name, std::string Description){UISettingsList.push_back(std::make_unique<Dasher::Settings::TextboxSetting>(Param, Name, Description));}
+    virtual void declareSliderSetting(Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step){UISettingsList.push_back(std::make_unique<Dasher::Settings::SliderSetting>(Param, Name, Description, min, max, step));}
+    virtual void declareSpinButtonSetting(Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step){UISettingsList.push_back(std::make_unique<Dasher::Settings::SpinSetting>(Param, Name, Description, min, max, step));}
+    virtual void declareDropdownSetting(Dasher::Parameter Param, std::string Name, std::string Description, std::unordered_map<std::string, int> Enums){UISettingsList.push_back(std::make_unique<Dasher::Settings::EnumSetting>(Param, Name, Description, Enums));}
+    virtual void declareSwitchSetting(Dasher::Parameter Param, std::string Name, std::string Description){UISettingsList.push_back(std::make_unique<Dasher::Settings::SwitchSetting>(Param, Name, Description));}
+
+private:
+    std::vector<std::unique_ptr<Dasher::Settings::ModuleSetting>> UISettingsList;
 };
 /// @}
 
