@@ -773,25 +773,28 @@ void CDasherInterfaceBase::CreateModules() {
   //WIP Temporary as too many segfaults! //RegisterModule(new CDemoFilter(this, this, m_pFramerate));
 }
 
-void CDasherInterfaceBase::GetPermittedValues(Parameter parameter, std::vector<std::string> &vList) {
-  // TODO: Deprecate direct calls to these functions
+std::vector<std::string> CDasherInterfaceBase::GetPermittedValues(Parameter parameter) {
+  std::vector<std::string> result;
+
   switch (parameter) {
     case SP_ALPHABET_ID:
       DASHER_ASSERT(m_AlphIO != NULL);
-      m_AlphIO->GetAlphabets(&vList);
+      m_AlphIO->GetAlphabets(&result);
       break;
     case SP_COLOUR_ID:
       DASHER_ASSERT(m_ColourIO != NULL);
-      m_ColorIO->GetKnownPalettes(&vList);
+      m_ColorIO->GetKnownPalettes(&result);
       break;
     case SP_INPUT_FILTER:
-      m_pModuleManager->ListInputMethodModules(vList);
+      m_pModuleManager->ListInputMethodModules(result);
       break;
     case SP_INPUT_DEVICE:
-      m_pModuleManager->ListInputDeviceModules(vList);
+      m_pModuleManager->ListInputDeviceModules(result);
       break;
     default: break;
   }
+
+  return result;
 }
 
 void CDasherInterfaceBase::SetOffset(int iOffset, bool bForce) {

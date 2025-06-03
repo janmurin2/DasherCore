@@ -103,7 +103,7 @@ public:
   /// geneate preferences dialogues etc.
   ///
 
-  void GetPermittedValues(Parameter parameter, std::vector<std::string> &vList);
+  std::vector<std::string> GetPermittedValues(Parameter parameter);
 
   CColorIO* GetColorIO(){return m_ColorIO;}
 
