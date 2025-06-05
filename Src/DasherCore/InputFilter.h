@@ -76,7 +76,7 @@ class CInputFilter : public CDasherModule {
     CStaticFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pIntf, const char *szName)
     : CInputFilter(pIntf, szName), m_pSettingsStore(pSettingsStore), m_pModel(NULL) {
     }
-    void pause() {if (m_pModel) m_pModel->ClearScheduledSteps();}
+    void pause() override {if (m_pModel) m_pModel->ClearScheduledSteps();}
   protected:
     void ScheduleZoom(CDasherModel *pModel, myint y1, myint y2) {
       (m_pModel = pModel)->ScheduleZoom(y1,y2,m_pSettingsStore->GetLongParameter(LP_ZOOMSTEPS));

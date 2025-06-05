@@ -23,11 +23,11 @@ namespace Dasher {
   public:
     CConvertingAlphMgr(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CNodeCreationManager *pNCManager, CConversionManager *pConvMgr, const CAlphInfo *pAlphabet);
     ///Override to also tell the ConversionManager that the screen has changed.
-    void MakeLabels(CDasherScreen *pScreen);
+    void MakeLabels(CDasherScreen *pScreen) override;
     virtual ~CConvertingAlphMgr();
   protected:
     ///Override to return a conversion root for iSymbol==(one beyond last alphabet symbol)
-    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol);
+    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol) override;
   private:
     CConversionManager *m_pConvMgr;
     

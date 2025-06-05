@@ -39,22 +39,22 @@ namespace Dasher {
   virtual ~CTwoPushDynamicFilter();
   
   // Inherited methods
-  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput);
+  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
  
-  virtual bool GetMinWidth(int &iMinWidth);
-  virtual bool GetSettings(SModuleSettings **pSettings, int *iCount);
+  virtual bool GetMinWidth(int &iMinWidth) override;
+  virtual bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
 
   //override to get mouse clicks / taps back again if BACKOFF_BUTTON off...
-  virtual void KeyDown(unsigned long Time, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel);
-  virtual void KeyUp(unsigned long Time, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel);
+  virtual void KeyDown(unsigned long Time, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel) override;
+  virtual void KeyUp(unsigned long Time, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel) override;
 
  protected:
-  virtual void TimerImpl(unsigned long Time, CDasherView *m_pDasherView, CDasherModel *m_pDasherModel, CExpansionPolicy **pol);
-  virtual void ActionButton(unsigned long iTime, Keys::VirtualKey Key, int iType, CDasherModel* pModel);
+  virtual void TimerImpl(unsigned long Time, CDasherView *m_pDasherView, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
+  virtual void ActionButton(unsigned long iTime, Keys::VirtualKey Key, int iType, CDasherModel* pModel) override;
 
   virtual void HandleParameterChange(Parameter parameter);
 
-  virtual void run(unsigned long iTime);
+  virtual void run(unsigned long iTime) override;
 
  private:
   void updateBitrate(double dBitrate);

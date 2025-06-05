@@ -15,11 +15,11 @@ class CDasherButtons : public CStaticFilter
   CDasherButtons(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, bool bMenu, const char *szName);
   virtual ~CDasherButtons();
 
-  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput)=0;
+  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput) override =0;
   
-  void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel);
-  void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol);
-  void Activate();
+  void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
+  void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
+  void Activate() override;
   
   struct SBoxInfo {
     int iTop;

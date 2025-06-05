@@ -10,9 +10,9 @@ class CTwoBoxStartHandler : public CStartHandler {
 public:
   CTwoBoxStartHandler(CDefaultFilter *pCreator, CSettingsStore* pSettingsStore);
 
-  virtual bool DecorateView(CDasherView *pView);
-  virtual void Timer(unsigned long iTime, dasherint iX, dasherint iY, CDasherView *pView);
-  virtual void onPause();
+  virtual bool DecorateView(CDasherView *pView) override;
+  virtual void Timer(unsigned long iTime, dasherint iX, dasherint iY, CDasherView *pView) override;
+  virtual void onPause() override;
  protected:
   CSettingsStore* m_pSettingsStore;
  private:

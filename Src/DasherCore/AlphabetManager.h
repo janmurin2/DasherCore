@@ -120,7 +120,7 @@ namespace Dasher {
       virtual ~CAlphNode();
       ///Have to call this from CAlphabetManager, and from CGroupNode on a _different_ CAlphNode, hence public...
       virtual std::vector<unsigned int> *GetProbInfo();
-      virtual int ExpectedNumChildren();
+      virtual int ExpectedNumChildren() override;
     private:
       std::vector<unsigned int> *m_pProbInfo;
     };

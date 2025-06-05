@@ -33,10 +33,10 @@ class CDynamicButtons : public CDynamicFilter {
   CDynamicButtons(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName);
 
   ///when reversing, backs off; when paused, does nothing; when running, delegates to TimerImpl
-  virtual void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol);
+  virtual void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
 
-  virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel);
-  virtual void KeyUp(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel);
+  virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
+  virtual void KeyUp(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
 
  protected:
   ///Called when a key event is detected - could be a single press (a la KeyDown/KeyUp),
@@ -68,9 +68,9 @@ class CDynamicButtons : public CDynamicFilter {
   bool m_bDecorationChanged;
   bool isReversing() {return !isPaused() && !m_bForwards;}
   bool isRunning() {return !isPaused() && m_bForwards;}
-  virtual void pause();
+  virtual void pause() override;
   virtual void reverse(unsigned long iTime);
-  virtual void run(unsigned long iTime);
+  virtual void run(unsigned long iTime) override;
 
   virtual void TimerImpl(unsigned long Time, CDasherView *m_pDasherView, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) = 0;
 

@@ -19,7 +19,7 @@ namespace Dasher {
     void SetProgressIndicator(ProgressIndicator *pProg) {m_pProg = pProg;}
 
     ///Parses a text file; bUser ignored.
-    bool Parse(const std::string &strDesc, std::istream &in, bool bUser);
+    bool Parse(const std::string &strDesc, std::istream &in, bool bUser) override;
   
   protected:
 

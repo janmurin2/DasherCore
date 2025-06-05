@@ -16,12 +16,12 @@ class CCompassMode : public CDasherButtons
 
   virtual void HandleEvent(Parameter parameter);
 
-  bool DecorateView(CDasherView *pView, CDasherInput *pInput);
+  bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
 
-  bool GetSettings(SModuleSettings **pSettings, int *iCount);
+  bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
 
  protected:
-  void SetupBoxes();
+  void SetupBoxes() override;
 
  private:
   int iTargetWidth;

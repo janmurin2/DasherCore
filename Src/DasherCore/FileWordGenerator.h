@@ -29,10 +29,10 @@ public:
 
   ///Attempt to read from an arbitrary stream. Returns false, as we
   /// only support reading game mode sentences from files.
-  bool Parse(const std::string &strDesc, std::istream &in, bool bUser);
+  bool Parse(const std::string &strDesc, std::istream &in, bool bUser) override;
   
   ///Attempt to open the specified file. Return true for success, false for failure
-  bool ParseFile(const std::string &strFileName, bool bUser);
+  bool ParseFile(const std::string &strFileName, bool bUser) override;
     
   virtual ~CFileWordGenerator() {
     m_sFileHandle.close();
@@ -42,7 +42,7 @@ public:
    * Return the next line from the file
    * @throw  Throws an exception if the file cannot be read.
    */
- virtual std::string GetLine();
+ virtual std::string GetLine() override;
   
   void setAcceptUser(bool bAcceptUser) {m_bAcceptUser = bAcceptUser;}
 

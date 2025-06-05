@@ -42,7 +42,7 @@ namespace Dasher {
     CRoutingAlphMgr(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CNodeCreationManager *pNCManager, const CAlphInfo *pAlphabet);
     
     ///Override to return a CRoutingTrainer
-    CTrainer *GetTrainer();
+    CTrainer *GetTrainer() override;
     
     ///Disable game mode. The target sentence might appear in several places...!!
     CWordGeneratorBase *GetGameWords() {return NULL;}
@@ -50,21 +50,21 @@ namespace Dasher {
   protected:
     ///Fills map w/ rehashed base symbols, filling m_vBaseSyms, m_vRoutes,
     /// and m_vGroupsByRoute to record which symbols were identified together.
-    void InitMap();
+    void InitMap() override;
     ///Override to create a RoutingPPMLanguageModel
-    void CreateLanguageModel();
+    void CreateLanguageModel() override;
 
     ///Creates a symbol, i.e. including route.
     /// Both ctx and sym were reconstructed from m_map (filled by InitMap), so
     /// are in terms of hashed base symbols; thus, this method identifies the best
     /// route by which that base may have been entered, and creates a symbol node
     /// for that.
-    CAlphNode *CreateSymbolRoot(int iOffset, CLanguageModel::Context ctx, symbol sym);
+    CAlphNode *CreateSymbolRoot(int iOffset, CLanguageModel::Context ctx, symbol sym) override;
     
     /// Override to create a CRoutedSym and enter only base sym into the LM
     ///\param iSymbol symbol number from the alphabet defn, i.e. identifies both
     /// base symbol and route
-    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol);
+    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol) override;
 
     ///Subclass to override trainText
     class CRoutedSym : public CSymbolNode {

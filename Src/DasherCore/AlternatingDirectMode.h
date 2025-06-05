@@ -17,12 +17,12 @@ namespace Dasher {
  public:
   CAlternatingDirectMode(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface);
 
-  bool DecorateView(CDasherView *pView, CDasherInput *pInput);
+  bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
 
-  bool GetSettings(SModuleSettings **pSettings, int *iCount);
+  bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
 
  protected:
-  void SetupBoxes();
+  void SetupBoxes() override;
 
  private:
   void DirectKeyDown(unsigned long iTime, int iId, CDasherView *pView, CDasherModel *pModel);

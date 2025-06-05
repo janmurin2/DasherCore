@@ -294,7 +294,7 @@ double xmax(double y)
 void CDefaultFilter::ApplyTransform(myint& iDasherX, myint& iDasherY, CDasherView* pView)
 {
     ApplyOffset(iDasherX, iDasherY);
-    if (m_pSettingsStore->GetLongParameter(LP_GEOMETRY) == 1)
+    if (m_pSettingsStore->GetLongParameter(LP_GEOMETRY) == Options::ScreenGeometry::square_no_xhair)
     {
         //crosshair may be offscreen; so do something to allow us to navigate
         // up/down and reverse

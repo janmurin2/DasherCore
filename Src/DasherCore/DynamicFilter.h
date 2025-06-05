@@ -36,9 +36,9 @@ class CDynamicFilter : public CInputFilter {
  public:
   CDynamicFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName);
 
-  virtual bool supportsPause() {return true;}
+  virtual bool supportsPause() override {return true;}
   
-  void pause() {m_bPaused = true;}
+  void pause() override {m_bPaused = true;}
   
  protected:
   ///wraps Model's one-step method to compute the number of steps and minsize

@@ -17,12 +17,12 @@ class COneDimensionalFilter : public CDefaultFilter {
 //  COneDimensionalFilter(CSettingsStore *pSettingsStore, CDasherInterfaceBase *pInterface, CDasherModel *m_pDasherModel);
   COneDimensionalFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName = _("One Dimensional Mode"));
   ///Override to remove DefaultFilters BP_REMAP_XTREME, BP_AUTOCALIBRATE, LP_OFFSET
-  bool GetSettings(SModuleSettings **pSettings, int *iCount);
+  bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
  protected:
   friend C1DCircleStartHandler;
-  virtual void ApplyTransform(myint &iDasherX, myint &iDasherY, CDasherView *pView);
+  virtual void ApplyTransform(myint &iDasherX, myint &iDasherY, CDasherView *pView) override;
   const myint forwardmax;
-  virtual CStartHandler *MakeStartHandler();
+  virtual CStartHandler *MakeStartHandler() override;
 };
 
 class C1DCircleStartHandler : public CCircleStartHandler {

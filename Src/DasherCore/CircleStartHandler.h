@@ -2,7 +2,6 @@
 
 #include "StartHandler.h"
 #include "SettingsStore.h"
-#include "DasherScreen.h"
 
 /// \ingroup Start
 /// @{
@@ -11,11 +10,11 @@ class CCircleStartHandler : public CStartHandler {
 public:
   CCircleStartHandler(CDefaultFilter *pCreator);
   ~CCircleStartHandler();
-  virtual bool DecorateView(CDasherView *pView);
-  virtual void Timer(unsigned long iTime, dasherint iX, dasherint iY, CDasherView *pView);
+  virtual bool DecorateView(CDasherView *pView) override;
+  virtual void Timer(unsigned long iTime, dasherint iX, dasherint iY, CDasherView *pView)override;
   void RegisterView(CDasherView* pView);
-  void onPause();
-  void onRun(unsigned long iTime);
+  void onPause() override;
+  void onRun(unsigned long iTime) override;
 protected:
   ///Time (as unix timestamp) when user entered circle; max() => already acted upon
   long m_iEnterTime;

@@ -12,11 +12,11 @@ class CDemoFilter : public CDynamicFilter {
 
   virtual void HandleEvent(Parameter parameter);
 
-  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput);
-  virtual void Timer(unsigned long Time, CDasherView *m_pDasherView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol);
-  virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel);
-  virtual void Activate();
-  virtual void Deactivate();
+  virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
+  virtual void Timer(unsigned long Time, CDasherView *m_pDasherView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
+  virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel) override;
+  virtual void Activate() override;
+  virtual void Deactivate() override;
  private:
   double m_dSpring, m_dNoiseNew, m_dNoiseOld;
   double m_dNoiseX, m_dNoiseY;

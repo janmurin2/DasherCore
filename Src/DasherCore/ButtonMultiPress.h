@@ -34,14 +34,14 @@ class CButtonMultiPress : public CDynamicButtons {
  public:
   CButtonMultiPress(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName);
 
-  void Timer(unsigned long iTime, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel, CExpansionPolicy **pol);
-  void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel);
+  void Timer(unsigned long iTime, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel, CExpansionPolicy **pol) override;
+  void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
 
-  void pause();
+  void pause() override;
  protected:
   virtual unsigned int maxClickCount()=0;
-  void reverse(unsigned long iTime);
-  void run(unsigned long iTime);
+  void reverse(unsigned long iTime) override;
+  void run(unsigned long iTime) override;
 
  private:
   virtual void RevertPresses(int iCount) {};

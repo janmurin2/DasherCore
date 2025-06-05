@@ -75,7 +75,7 @@ namespace Dasher {
       CMandarinTrainer(CMessageDisplay *pMsgs, CMandarinAlphMgr *pMgr);
     protected:
       //override...
-      virtual void Train(CAlphabetMap::SymbolStream &syms);
+      virtual void Train(CAlphabetMap::SymbolStream &syms) override;
     private:
       CMandarinAlphMgr * const m_pMgr;
       int m_iStartSym;
@@ -91,7 +91,7 @@ namespace Dasher {
     ~CMandarinAlphMgr();
     
     ///ACL: returns a MandarinTrainer too.
-    CTrainer *GetTrainer();
+    CTrainer *GetTrainer() override;
     
     ///Disable game mode. The target sentence might appear in several places...!!
     CWordGeneratorBase *GetGameWords() {return NULL;}
@@ -105,9 +105,9 @@ namespace Dasher {
     /// the character information methods (GetDisplayText, etc.,
     /// also MakeMap) return information on the target(chinese)-alphabet symbols, which
     /// are rehashed from the original/input alphabet to remove duplicates;
-    void InitMap();
+    void InitMap() override;
     ///WZ: Mandarin Dasher Change. Sets language model to PPMPY.
-    void CreateLanguageModel();
+    void CreateLanguageModel() override;
     
     ///Process SGroupInfo's from the alphabet into form suitable for m_pPYgroups
     /// \param pBase group from alphabet (i.e. containing unhashed CH symbol numbers)
@@ -115,19 +115,19 @@ namespace Dasher {
     SGroupInfo *makePYgroup(const SGroupInfo *in);
     
     ///Override just to cache the screen so we can make (CH) labels lazily
-    void MakeLabels(CDasherScreen *pScreen);
+    void MakeLabels(CDasherScreen *pScreen) override;
 
     ///Override just to create root of tree from m_pPYgroups instead of m_pAlphabet
-    SGroupInfo *copyGroups(const SGroupInfo *pBase, CDasherScreen *pScreen);
+    SGroupInfo *copyGroups(const SGroupInfo *pBase, CDasherScreen *pScreen) override;
 
     //Remove label on the "symbols" i.e. PY sounds; we use the label
     // internally to identify a CH group, but for display purposes the symbol is
     // identified entirely by the PY groups around it.
-    const std::string &GetLabelText(symbol i) const;
+    const std::string &GetLabelText(symbol i) const override;
 
     ///Override to create a CMandSym; context and sym both obtained from the
     // ChineseAlphabet's (hashed) symbols stored in m_map.
-    CAlphNode *CreateSymbolRoot(int iOffset, CLanguageModel::Context ctx, symbol sym);
+    CAlphNode *CreateSymbolRoot(int iOffset, CLanguageModel::Context ctx, symbol sym) override;
 
     class CConvRoot;
     ///Subclass of CSymbolNode for (converted) chinese-alphabet symbols:
@@ -183,7 +183,7 @@ namespace Dasher {
     ///Called to create the node for a pinyin leaf symbol;
     /// Overridden to call either CreateConvRoot or CreateCHSymbol, according to #chinese symbols under specified pinyin
     /// \param iSymbol Symbol number in pinyin alphabet
-    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol);
+    virtual CDasherNode *CreateSymbolNode(CAlphNode *pParent, symbol iSymbol) override;
 
     ///Creates a CConvRoot, for a Pinyin symbol with multiple possible chinese symbols.
     /// Color is always 9 (opaque), so no need for background colour.
