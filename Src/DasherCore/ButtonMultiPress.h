@@ -38,6 +38,8 @@ class CButtonMultiPress : public CDynamicButtons {
   void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
 
   void pause() override;
+  virtual void GetUISettings(UISettingList& List) override;
+
  protected:
   virtual unsigned int maxClickCount()=0;
   void reverse(unsigned long iTime) override;

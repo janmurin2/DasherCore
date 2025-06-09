@@ -27,6 +27,12 @@ CButtonMultiPress::CButtonMultiPress(CSettingsStore* pSettingsStore, CDasherInte
   : CDynamicButtons(pSettingsStore, pInterface, pFramerate, szName) {
 }
 
+void CButtonMultiPress::GetUISettings(UISettingList& List) {
+    CDynamicButtons::GetUISettings(List);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_HOLD_TIME, "LP_HOLD_TIME", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_MULTIPRESS_TIME, "LP_MULTIPRESS_TIME", "", false, 1, 1000, 1);
+}
+
 void CButtonMultiPress::Timer(unsigned long iTime, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel, CExpansionPolicy **pol) {
   if(m_bKeyDown && !m_bKeyHandled && ((iTime - m_iKeyDownTime) > static_cast<unsigned long>(m_pSettingsStore->GetLongParameter(LP_HOLD_TIME)))) {
     ButtonEvent(iTime, m_iHeldId, 1, pModel);

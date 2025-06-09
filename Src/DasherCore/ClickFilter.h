@@ -2,7 +2,8 @@
 
 #include <I18n.h>
 
-#include "InputFilter.h"
+#include "SettingsStore.h"
+#include "StaticFilter.h"
 
 /// \ingroup InputFilter
 /// @{
@@ -26,7 +27,8 @@ class CClickFilter : public CStaticFilter, private CZoomAdjuster {
   virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
   virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   virtual bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
-  
+  virtual void GetUISettings(UISettingList& List) override;
+
  private:
   //for mouse lines
   myint m_iLastX, m_iLastY;

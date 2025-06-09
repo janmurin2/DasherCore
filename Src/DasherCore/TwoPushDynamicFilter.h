@@ -43,6 +43,7 @@ namespace Dasher {
  
   virtual bool GetMinWidth(int &iMinWidth) override;
   virtual bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
+  virtual void GetUISettings(UISettingList& List) override;
 
   //override to get mouse clicks / taps back again if BACKOFF_BUTTON off...
   virtual void KeyDown(unsigned long Time, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel) override;

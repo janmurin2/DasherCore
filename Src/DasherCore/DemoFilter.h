@@ -17,6 +17,9 @@ class CDemoFilter : public CDynamicFilter {
   virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pDasherView, CDasherInput *pInput, CDasherModel *pModel) override;
   virtual void Activate() override;
   virtual void Deactivate() override;
+
+  virtual void GetUISettings(UISettingList& List) override;
+
  private:
   double m_dSpring, m_dNoiseNew, m_dNoiseOld;
   double m_dNoiseX, m_dNoiseY;

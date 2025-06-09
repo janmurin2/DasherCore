@@ -6,6 +6,7 @@
 
 #include "DasherScreen.h"
 #include "DasherModel.h"
+#include "StaticFilter.h"
 
 using namespace Dasher;
 
@@ -14,6 +15,13 @@ static SModuleSettings sSettings[] = {
   {LP_STATIC1B_ZOOM, T_LONG, 1, 16, 1, 1, _("Factor by which to zoom in")},
   {LP_DYNAMIC_BUTTON_LAG, T_LONG, 0, 1000, 1, 25, _("Lag before user actually pushes button (ms)")},
 };
+
+void COneButtonFilter::GetUISettings(UISettingList& List) {
+    CStaticFilter::GetUISettings(List);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_BUTTON_LAG, "LP_DYNAMIC_BUTTON_LAG", "", false, 0, 1000, 25);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_STATIC1B_TIME, "LP_STATIC1B_TIME", "", false, 100, 5000, 100);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_STATIC1B_ZOOM, "LP_STATIC1B_ZOOM", "", false, 1, 16, 1);
+}
 
 COneButtonFilter::COneButtonFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface)
   : CStaticFilter(pSettingsStore, pInterface, "Static One Button Mode") {

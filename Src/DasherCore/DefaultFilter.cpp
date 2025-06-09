@@ -36,6 +36,32 @@ static SModuleSettings sSettings[] = {
     {BP_EXACT_DYNAMICS, T_BOOL, -1, -1, -1, -1, _("Use exact computation of per-frame movement (slower)")},
 };
 
+void CDefaultFilter::GetUISettings(UISettingList& List) {
+    CDynamicFilter::GetUISettings(List);
+
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_DRAW_MOUSE_LINE, "BP_DRAW_MOUSE_LINE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_DRAW_MOUSE, "BP_DRAW_MOUSE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_CURVE_MOUSE_LINE, "BP_CURVE_MOUSE_LINE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_START_MOUSE, "BP_START_MOUSE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_START_SPACE, "BP_START_SPACE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_MOUSEPOS_MODE, "BP_MOUSEPOS_MODE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_TURBO_MODE, "BP_TURBO_MODE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_AUTOCALIBRATE, "BP_AUTOCALIBRATE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_REMAP_XTREME, "BP_REMAP_XTREME", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_CIRCLE_START, "BP_CIRCLE_START", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_STOP_OUTSIDE, "BP_STOP_OUTSIDE", "", false);
+
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_LINE_WIDTH, "LP_LINE_WIDTH", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TARGET_OFFSET, "LP_TARGET_OFFSET", "", false, 1, 1000, 1);
+
+    DeclareDropdownSetting(List, LP_GEOMETRY, "LP_GEOMETRY", "", false,  {
+        {"Old Style", Dasher::Options::ScreenGeometry::old_style},
+        {"Square without Crosshair", Dasher::Options::ScreenGeometry::square_no_xhair},
+        {"Squish", Dasher::Options::ScreenGeometry::squish},
+        {"Squaish + Log", Dasher::Options::ScreenGeometry::squish_and_log},
+    });
+}
+
 bool CDefaultFilter::GetSettings(SModuleSettings** sets, int* iCount)
 {
     *sets = sSettings;

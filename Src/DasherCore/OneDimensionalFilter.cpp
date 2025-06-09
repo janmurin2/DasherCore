@@ -9,25 +9,31 @@ using namespace Dasher;
   : COneDimensionalFilter(pSettingsStore, pInterface, m_pDasherModel, 4, _("One Dimensional Mode")) {
 }*/
 
+void COneDimensionalFilter::GetUISettings(UISettingList& List) {
+  CDefaultFilter::GetUISettings(List);
+  RemoveDeclaredSetting(List, Dasher::Parameter::BP_REMAP_XTREME);
+  RemoveDeclaredSetting(List, Dasher::Parameter::LP_GEOMETRY);
+}
+
 point C1DCircleStartHandler::CircleCenter(CDasherView* pView)
 {
-    if (m_iScreenRadius==-1) {//if we need to recompute
-        CCircleStartHandler::CircleCenter(pView); //that does the radius
-        const myint rad(static_cast<myint>(m_pSettingsStore->GetLongParameter(LP_CIRCLE_PERCENT)) * CDasherModel::ORIGIN_Y / 100); //~~rad/2 in dasher-coords
-        m_pView->Dasher2Screen(CDasherModel::ORIGIN_X-static_cast<COneDimensionalFilter*>(m_pFilter)->forwardmax+rad, CDasherModel::ORIGIN_Y,m_fwdCenter.x, m_fwdCenter.y);
-    }
-    if (!static_cast<COneDimensionalFilter*>(m_pFilter)->isPaused()) return CCircleStartHandler::CircleCenter(pView);
-    //paused. put start circle at center of 1D transform, rather than center of screen
-    // but keep the same m_iScreenRadius, in pixels - so recompute if necessary:
-    return m_fwdCenter;
+  if (m_iScreenRadius==-1) {//if we need to recompute
+      CCircleStartHandler::CircleCenter(pView); //that does the radius
+      const myint rad(static_cast<myint>(m_pSettingsStore->GetLongParameter(LP_CIRCLE_PERCENT)) * CDasherModel::ORIGIN_Y / 100); //~~rad/2 in dasher-coords
+      m_pView->Dasher2Screen(CDasherModel::ORIGIN_X-static_cast<COneDimensionalFilter*>(m_pFilter)->forwardmax+rad, CDasherModel::ORIGIN_Y,m_fwdCenter.x, m_fwdCenter.y);
+  }
+  if (!static_cast<COneDimensionalFilter*>(m_pFilter)->isPaused()) return CCircleStartHandler::CircleCenter(pView);
+  //paused. put start circle at center of 1D transform, rather than center of screen
+  // but keep the same m_iScreenRadius, in pixels - so recompute if necessary:
+  return m_fwdCenter;
 }
 
 void C1DCircleStartHandler::onPause()
 {
-    //circle needs to move for pause/unpause; setting radius to -1 causes
-    // next call to DecorateView or Timer to re-call ComputeScreenLoc.
-    m_iScreenRadius=-1;
-    CCircleStartHandler::onPause();
+  //circle needs to move for pause/unpause; setting radius to -1 causes
+  // next call to DecorateView or Timer to re-call ComputeScreenLoc.
+  m_iScreenRadius=-1;
+  CCircleStartHandler::onPause();
 }
 
 COneDimensionalFilter::COneDimensionalFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName)

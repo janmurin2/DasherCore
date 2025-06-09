@@ -23,6 +23,7 @@ class CButtonMode : public CDasherButtons
   void KeyDown(unsigned long Time, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   
   bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
+  virtual void GetUISettings(UISettingList& List) override;
  protected: 
   void SetupBoxes() override;
   void DirectKeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView* pView, CDasherModel* pModel) override;

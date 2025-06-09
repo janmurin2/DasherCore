@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "InputFilter.h"
+#include "SettingsStore.h"
+#include "StaticFilter.h"
 
 namespace Dasher {
 /// \ingroup Input
@@ -20,6 +21,8 @@ class CDasherButtons : public CStaticFilter
   void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
   void Activate() override;
+
+  virtual void GetUISettings(UISettingList& List) override;
   
   struct SBoxInfo {
     int iTop;

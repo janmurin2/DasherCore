@@ -39,6 +39,8 @@ class CDynamicFilter : public CInputFilter {
   virtual bool supportsPause() override {return true;}
   
   void pause() override {m_bPaused = true;}
+
+  virtual void GetUISettings(UISettingList& List) override;
   
  protected:
   ///wraps Model's one-step method to compute the number of steps and minsize

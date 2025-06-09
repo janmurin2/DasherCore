@@ -84,6 +84,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SimpleTimer.cpp
 	# ${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInput.cpp
 	# ${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInputBase.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/StaticFilter.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/StylusFilter.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/TimeSpan.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/Trainer.cpp

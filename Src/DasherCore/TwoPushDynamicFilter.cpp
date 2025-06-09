@@ -43,6 +43,16 @@ static SModuleSettings sSettings[] = {
   {LP_DYNAMIC_BUTTON_LAG, T_LONG, 0, 1000, 1, 25, _("Lag before user actually pushes button (ms)")}, 
 };
 
+void CTwoPushDynamicFilter::GetUISettings(UISettingList& List) {
+    CInputFilter::GetUISettings(List);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_TWO_PUSH_RELEASE_TIME, "BP_TWO_PUSH_RELEASE_TIME", "", false);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TWO_PUSH_OUTER, "LP_TWO_PUSH_OUTER", "", false, 1024, 2048, 128);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_BUTTON_LAG, "LP_DYNAMIC_BUTTON_LAG", "", false, 1, 1000, 25);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TWO_PUSH_TOLERANCE, "LP_TWO_PUSH_TOLERANCE", "", false, 50, 1000, 10);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TWO_PUSH_SHORT, "LP_TWO_PUSH_SHORT", "", false, 10, 90, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TWO_PUSH_LONG, "LP_TWO_PUSH_LONG", "", false, 128, 1024, 128);
+}
+
 CTwoPushDynamicFilter::CTwoPushDynamicFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate)
   : CDynamicButtons(pSettingsStore, pInterface, pFramerate, _("Two-push Dynamic Mode (New One Button)")),
     m_dNatsSinceFirstPush(-std::numeric_limits<double>::infinity())

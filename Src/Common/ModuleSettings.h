@@ -37,39 +37,45 @@ namespace Dasher {
     struct ModuleSetting
     {
       SettingsType Type;
-      ModuleSetting(SettingsType Type, Dasher::Parameter Param, std::string Name, std::string Description) : Type(Type), Param(Param), Description(Description), Name(Name) {}
+      ModuleSetting(SettingsType Type, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting) : Type(Type), Param(Param), Description(Description), Name(Name), AdvancedSetting(AdvancedSetting) {}
       virtual ~ModuleSetting() {};
+
+      bool operator<(const ModuleSetting& other) const
+      {
+          return Name < other.Name;
+      }
       
       std::string Name;
       std::string Description;
       Dasher::Parameter Param;
+      bool AdvancedSetting;
     };
     
     struct TextboxSetting : ModuleSetting {
-      TextboxSetting(Dasher::Parameter Param, std::string Name, std::string Description) : ModuleSetting(SettingsType::TextField, Param, Name, Description) {}
+      TextboxSetting(Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting) : ModuleSetting(SettingsType::TextField, Param, Name, Description, AdvancedSetting) {}
     };
     
     struct SliderSetting : ModuleSetting {
-      SliderSetting(Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step) : ModuleSetting(SettingsType::Slider, Param, Name, Description), min(min), max(max), step(step) {};
+      SliderSetting(Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step) : ModuleSetting(SettingsType::Slider, Param, Name, Description, AdvancedSetting), min(min), max(max), step(step) {};
       int min;
       int max;
       int step;
     };
 
     struct SpinSetting : ModuleSetting {
-      SpinSetting(Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step) : ModuleSetting(SettingsType::Step, Param, Name, Description), min(min), max(max), step(step) {}
+      SpinSetting(Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step) : ModuleSetting(SettingsType::Step, Param, Name, Description, AdvancedSetting), min(min), max(max), step(step) {}
       int min;
       int max;
       int step;
     };
 
     struct EnumSetting : ModuleSetting {
-      EnumSetting(Dasher::Parameter Param, std::string Name, std::string Description, std::unordered_map<std::string, int> Enums) : ModuleSetting(SettingsType::Enum, Param, Name, Description), Enums(Enums) {};
+      EnumSetting(Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, std::unordered_map<std::string, int> Enums) : ModuleSetting(SettingsType::Enum, Param, Name, Description, AdvancedSetting), Enums(Enums) {};
       std::unordered_map<std::string, int> Enums;
     };
 
     struct SwitchSetting : ModuleSetting {
-      SwitchSetting(Dasher::Parameter Param, std::string Name, std::string Description) : ModuleSetting(SettingsType::Switch, Param, Name, Description) {};
+      SwitchSetting(Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting) : ModuleSetting(SettingsType::Switch, Param, Name, Description, AdvancedSetting) {};
     };
   }
 }

@@ -21,6 +21,7 @@
 #pragma once
 
 #include "../Common/ModuleSettings.h"
+#include <algorithm>
 #include <memory>
 #include <vector>
 
@@ -47,11 +48,17 @@ public:
     typedef std::vector<std::unique_ptr<Dasher::Settings::ModuleSetting>> UISettingList;
     // Fill this list using the provided methods below to define which UI components could be used by the UI to change your respective setting
     virtual void GetUISettings(UISettingList& List){};
-    static void DeclareTextboxSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description){List.push_back(std::make_unique<Dasher::Settings::TextboxSetting>(Param, Name, Description));}
-    static void DeclareSliderSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SliderSetting>(Param, Name, Description, min, max, step));}
-    static void DeclareSpinButtonSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SpinSetting>(Param, Name, Description, min, max, step));}
-    static void DeclareDropdownSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, std::unordered_map<std::string, int> Enums){List.push_back(std::make_unique<Dasher::Settings::EnumSetting>(Param, Name, Description, Enums));}
-    static void DeclareSwitchSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description){List.push_back(std::make_unique<Dasher::Settings::SwitchSetting>(Param, Name, Description));}
+    static void DeclareTextboxSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting){List.push_back(std::make_unique<Dasher::Settings::TextboxSetting>(Param, Name, Description, AdvancedSetting));}
+    static void DeclareSliderSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SliderSetting>(Param, Name, Description, AdvancedSetting, min, max, step));}
+    static void DeclareSpinButtonSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SpinSetting>(Param, Name, Description, AdvancedSetting, min, max, step));}
+    static void DeclareDropdownSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, std::unordered_map<std::string, int> Enums){List.push_back(std::make_unique<Dasher::Settings::EnumSetting>(Param, Name, Description, AdvancedSetting, Enums));}
+    static void DeclareSwitchSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting){List.push_back(std::make_unique<Dasher::Settings::SwitchSetting>(Param, Name, Description, AdvancedSetting));}
+    // Can be used if a specific setting is added by the parent class but overridden or not used by the childclass 
+    static void RemoveDeclaredSetting(UISettingList& List, Dasher::Parameter Param){
+        List.erase(std::remove_if(List.begin(), List.end(), [&Param](std::unique_ptr<Dasher::Settings::ModuleSetting>& elem){
+            return elem->Param == Param;
+        }), List.end());
+    }
 };
 /// @}
 

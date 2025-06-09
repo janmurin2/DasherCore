@@ -38,6 +38,8 @@ class CDynamicButtons : public CDynamicFilter {
   virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   virtual void KeyUp(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
 
+  virtual void GetUISettings(UISettingList& List) override;
+
  protected:
   ///Called when a key event is detected - could be a single press (a la KeyDown/KeyUp),
   /// but is also called with explicit indication of "long" or other types of press,

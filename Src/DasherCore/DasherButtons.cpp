@@ -6,6 +6,7 @@
 #include "DasherButtons.h"
 #include "DasherScreen.h"
 #include "DasherInterfaceBase.h"
+#include "StaticFilter.h"
 
 
 using namespace Dasher;
@@ -17,6 +18,11 @@ CDasherButtons::~CDasherButtons()
 {
   delete[] m_pBoxes;
 } 
+
+void CDasherButtons::GetUISettings(UISettingList& List) {
+  CStaticFilter::GetUISettings(List);
+  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_BUTTON_SCAN_TIME, "LP_BUTTON_SCAN_TIME", "", false, 0, 2000, 100);
+}
 
 void CDasherButtons::Activate() {
   //ick - can't do this at construction time! This should get called before anything

@@ -12,6 +12,7 @@ public:
 	void KeyUp(unsigned long iTime, Keys::VirtualKey Key, CDasherView* pView, CDasherInput* pInput, CDasherModel* pModel) override;
     void Timer(unsigned long Time, CDasherView* pView, CDasherInput* pInput, CDasherModel* pModel, CExpansionPolicy** pol) override;
     bool DecorateView(CDasherView* pView, CDasherInput* pInput) override;
+    virtual void GetUISettings(UISettingList& List) override;
 
 private:
     float SmoothedPositionX = -1.0f;

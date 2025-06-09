@@ -23,6 +23,15 @@
 
 using namespace Dasher;
 
+void CDynamicButtons::GetUISettings(UISettingList& List) {
+    CDynamicFilter::GetUISettings(List);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_BACKOFF_BUTTON, "BP_BACKOFF_BUTTON", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_AUTO_SPEEDCONTROL, "BP_AUTO_SPEEDCONTROL", "", false);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_SPEED_FREQ, "LP_DYNAMIC_SPEED_FREQ", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_SPEED_INC, "LP_DYNAMIC_SPEED_INC", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_SPEED_DEC, "LP_DYNAMIC_SPEED_DEC", "", false, 1, 1000, 1);
+}
+
 CDynamicButtons::CDynamicButtons(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName)
   : CDynamicFilter(pSettingsStore, pInterface, pFramerate, szName), m_pModel(NULL) {
   m_bDecorationChanged = true;

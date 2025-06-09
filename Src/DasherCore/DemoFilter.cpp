@@ -9,6 +9,19 @@
 
 using namespace Dasher;
 
+void CDemoFilter::GetUISettings(UISettingList& List) {
+    CDynamicFilter::GetUISettings(List);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_DRAW_MOUSE, "BP_DRAW_MOUSE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_CURVE_MOUSE_LINE, "BP_CURVE_MOUSE_LINE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_START_MOUSE, "BP_START_MOUSE", "", false);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_MAX_BITRATE, "LP_MAX_BITRATE", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_FRAMERATE, "LP_FRAMERATE", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_LINE_WIDTH, "LP_LINE_WIDTH", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DEMO_SPRING, "LP_DEMO_SPRING", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DEMO_NOISE_MEM, "LP_DEMO_NOISE_MEM", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DEMO_NOISE_MAG, "LP_DEMO_NOISE_MAG", "", false, 1, 1000, 1);
+}
+
 CDemoFilter::CDemoFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate)
   : CDynamicFilter(pSettingsStore, pInterface, pFramerate, _("Demo Mode (no input)")),
 m_dNoiseX(0.0), m_dNoiseY(0.0), m_iDemoX(0), m_iDemoY(0) {

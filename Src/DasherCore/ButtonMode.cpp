@@ -7,6 +7,7 @@
 #include <I18n.h>
 #include <cmath>
 
+#include "DasherButtons.h"
 #include "DasherScreen.h"
 #include "DasherInterfaceBase.h"
 
@@ -28,6 +29,13 @@ static SModuleSettings sSettings[] = {
   /* TRANSLATORS: Intercept keyboard events for 'special' keys even when the Dasher window doesn't have keyboard focus.*/
   {BP_GLOBAL_KEYBOARD, T_BOOL, -1, -1, -1, -1, _("Global keyboard grab")}
 };
+
+void CButtonMode::GetUISettings(UISettingList& List) {
+    CDasherButtons::GetUISettings(List);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_B, "LP_B", "", false, 2, 10, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_S, "LP_S", "", false, 0, 256, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_R, "LP_R", "", false, -89, 89, 10);
+}
 
 // FIX iStyle == 0
 

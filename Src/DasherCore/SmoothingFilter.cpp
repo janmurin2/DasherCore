@@ -2,9 +2,17 @@
 #include <cmath>
 #include <algorithm>
 
-Dasher::CSmoothingFilter::CSmoothingFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase* pInterface, CFrameRate* pFramerate, const char *szName) : CPressFilter(pSettingsStore, pInterface, pFramerate, szName)
-{
+void Dasher::CSmoothingFilter::GetUISettings(UISettingList& List) {
+    CPressFilter::GetUISettings(List);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_SMOOTH_TAU, "LP_SMOOTH_TAU", "", false, 1, 1000, 1);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_DRAW_MOUSE_LINE, "BP_SMOOTH_DRAW_MOUSE_LINE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_DRAW_MOUSE, "BP_SMOOTH_DRAW_MOUSE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_ONLY_FORWARD, "BP_SMOOTH_ONLY_FORWARD", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_PRESS_MODE, "BP_SMOOTH_PRESS_MODE", "", false);
 }
+
+Dasher::CSmoothingFilter::CSmoothingFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase* pInterface, CFrameRate* pFramerate, const char *szName) : CPressFilter(pSettingsStore, pInterface, pFramerate, szName)
+{}
 
 void Dasher::CSmoothingFilter::KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView* pDasherView, CDasherInput* pInput, CDasherModel* pModel)
 {
@@ -56,8 +64,7 @@ void Dasher::CSmoothingFilter::Timer(unsigned long Time, CDasherView* pView, CDa
 	        
 	    SmoothedPositionX = smoothingAlpha * static_cast<float>(newX) + (1.0f - smoothingAlpha) * SmoothedPositionX;
 	    SmoothedPositionY = smoothingAlpha * static_cast<float>(newY) + (1.0f - smoothingAlpha) * SmoothedPositionY;
-	}
-    else
+	}else
 	{
 	    SmoothedPositionX = static_cast<float>(newX);
 	    SmoothedPositionY = static_cast<float>(newY);

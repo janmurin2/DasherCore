@@ -49,6 +49,14 @@ static SModuleSettings sSettings[] = {
   {LP_DYNAMIC_SPEED_DEC, T_LONG, 1, 99, 1, 1, _("Percentage by which to decrease speed upon reverse")}
 };
 
+void CTwoButtonDynamicFilter::GetUISettings(UISettingList& List) {
+    CButtonMultiPress::GetUISettings(List);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_TWOBUTTON_REVERSE, "BP_TWOBUTTON_REVERSE", "", false);
+    DeclareSwitchSetting(List, Dasher::Parameter::BP_2B_INVERT_DOUBLE, "BP_2B_INVERT_DOUBLE", "", false);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TWO_BUTTON_OFFSET, "LP_TWO_BUTTON_OFFSET", "", false, 1, 1000, 1);
+    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_BUTTON_LAG, "LP_DYNAMIC_BUTTON_LAG", "", false, 1, 1000, 1);
+}
+
 CTwoButtonDynamicFilter::CTwoButtonDynamicFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate)
   : CButtonMultiPress(pSettingsStore, pInterface, pFramerate, _("Two Button Dynamic Mode")),
     m_iMouseButton(Keys::Invalid_Key)
