@@ -75,13 +75,10 @@ void CDasherButtons::DirectKeyDown(unsigned long iTime, Keys::VirtualKey Key, CD
 }
 
 void CDasherButtons::Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel, CExpansionPolicy **pol) {
-  if (m_bMenu && m_pSettingsStore->GetLongParameter(LP_BUTTON_SCAN_TIME) &&
-      Time > m_iScanTime) {
+  if (m_bMenu && m_pSettingsStore->GetLongParameter(LP_BUTTON_SCAN_TIME) && Time > m_iScanTime) {
     m_iScanTime = Time + m_pSettingsStore->GetLongParameter(LP_BUTTON_SCAN_TIME);
     m_bDecorationChanged = true;
-    ++iActiveBox;
-    if(iActiveBox == m_iNumBoxes)
-      iActiveBox = 0;
+    iActiveBox = (iActiveBox + 1) % m_iNumBoxes;
   }
   // TODO: This is a bit of a hack to make joystick mode work
   myint iDasherX;
