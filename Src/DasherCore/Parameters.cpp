@@ -23,9 +23,7 @@ namespace Dasher{
 		{BP_REMAP_XTREME          , Parameter_Value{"RemapXtreme"          , PARAM_BOOL, Persistence::PERSISTENT, false, "Pointer at extreme Y translates more and zooms less", "", Settings::UIControlType::Switch}},
 		{BP_AUTO_SPEEDCONTROL     , Parameter_Value{"AutoSpeedControl"     , PARAM_BOOL, Persistence::PERSISTENT, true , "AutoSpeedControl", "", Settings::UIControlType::Switch}},
 		{BP_LM_ADAPTIVE           , Parameter_Value{"LMAdaptive"           , PARAM_BOOL, Persistence::PERSISTENT, true , "Whether language model should learn as you enter text"}},
-		{BP_SOCKET_DEBUG          , Parameter_Value{"SocketInputDebug"     , PARAM_BOOL, Persistence::PERSISTENT, false, "Print information about socket input processing to console"}},
 		{BP_CIRCLE_START          , Parameter_Value{"CircleStart"          , PARAM_BOOL, Persistence::PERSISTENT, false, "Start on circle mode", "", Settings::UIControlType::Switch}},
-		{BP_GLOBAL_KEYBOARD       , Parameter_Value{"GlobalKeyboard"       , PARAM_BOOL, Persistence::PERSISTENT, false, "Whether to assume global control of the keyboard"}},
 		{BP_NONLINEAR_Y           , Parameter_Value{"NonlinearY"           , PARAM_BOOL, Persistence::PERSISTENT, true , "Apply nonlinearities to Y axis (i.e. compress top &amp; bottom)"}},
 		{BP_STOP_OUTSIDE          , Parameter_Value{"PauseOutside"         , PARAM_BOOL, Persistence::PERSISTENT, false, "Whether to stop when pointer leaves canvas area", "", Settings::UIControlType::Switch}},
 #ifdef TARGET_OS_IPHONE                              
@@ -41,7 +39,6 @@ namespace Dasher{
 		{BP_SPEAK_WORDS           , Parameter_Value{"SpeakWords"           , PARAM_BOOL, Persistence::PERSISTENT, false, "Speak words as they are written"}},
 		{BP_GAME_HELP_DRAW_PATH   , Parameter_Value{"GameDrawPath"         , PARAM_BOOL, Persistence::PERSISTENT, true , "When we give help, show the shortest path to the target sentence"}},
 		{BP_TWO_PUSH_RELEASE_TIME , Parameter_Value{"TwoPushReleaseTime"   , PARAM_BOOL, Persistence::PERSISTENT, false, "Use push and release times of single press rather than push times of two presses", "", Settings::UIControlType::Switch}},
-		{BP_SLOW_CONTROL_BOX      , Parameter_Value{"SlowControlBox"       , PARAM_BOOL, Persistence::PERSISTENT, true , "Slow down when going through control box" }},
 		{BP_SIMULATE_TRANSPARENCY , Parameter_Value{"SimulateTransparency" , PARAM_BOOL, Persistence::PERSISTENT, false, "Enable the internal color mixing and thus the need to support alpha blending in the renderer." }},
 									 
 		{LP_ORIENTATION           , Parameter_Value{ "ScreenOrientation"         , PARAM_LONG, Persistence::PERSISTENT, -2l  , "Screen Orientation"}},
@@ -52,7 +49,6 @@ namespace Dasher{
 		{LP_MESSAGE_FONTSIZE      , Parameter_Value{ "MessageFontSize"           , PARAM_LONG, Persistence::PERSISTENT, 14l   , "Size of font for messages (in points)"}},
 		{LP_SHAPE_TYPE            , Parameter_Value{ "RenderStyle"               , PARAM_LONG, Persistence::PERSISTENT, static_cast<long>(Options::OVERLAPPING_RECTANGLE), "Shapes to render in (see Options::Rendering_Shape_Types)"}},
 		{LP_UNIFORM               , Parameter_Value{ "UniformTimes1000"          , PARAM_LONG, Persistence::PERSISTENT, 50l   , "UniformTimes1000"}},
-		{LP_YSCALE                , Parameter_Value{ "YScaling"                  , PARAM_LONG, Persistence::PERSISTENT, 0l    , "YScaling"}},
 		{LP_MOUSEPOSDIST          , Parameter_Value{ "MousePositionBoxDistance"  , PARAM_LONG, Persistence::PERSISTENT, 50l   , "MousePositionBoxDistance"}},
 		{LP_PY_PROB_SORT_THRES    , Parameter_Value{ "PYProbabilitySortThreshold", PARAM_LONG, Persistence::PERSISTENT, 85l   , "Sort converted syms in descending probability order up to this percentage"}},
 		{LP_MESSAGE_TIME          , Parameter_Value{ "MessageTime"               , PARAM_LONG, Persistence::PERSISTENT, 2500l , "Time for which non-modal messages are displayed, in ms"}},
@@ -136,8 +132,6 @@ namespace Dasher{
 		{ SP_COLOUR_ID           , Parameter_Value{ "ColourID"         , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "ColourID" }},
 		{SP_DASHER_FONT          , Parameter_Value{ "DasherFont"       , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "DasherFont"}},
 		{SP_GAME_TEXT_FILE       , Parameter_Value{ "GameTextFile"     , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "User-specified file with strings to practice writing"}},
-		{SP_SOCKET_INPUT_X_LABEL , Parameter_Value{ "SocketInputXLabel", PARAM_STRING, Persistence::PERSISTENT, std::string("x")             , "Label preceding X values for network input"}},
-		{SP_SOCKET_INPUT_Y_LABEL , Parameter_Value{ "SocketInputYLabel", PARAM_STRING, Persistence::PERSISTENT, std::string("y")             , "Label preceding Y values for network input"}},
 #ifdef TARGET_OS_IPHONE           
 		{SP_INPUT_FILTER        , Parameter_Value{ "InputFilter"      , PARAM_STRING, Persistence::PERSISTENT, std::string("Stylus Control"), "Input filter used to provide the current control mode"}},
 #else                             
@@ -150,7 +144,6 @@ namespace Dasher{
 		{SP_BUTTON_3             , Parameter_Value{ "Button3"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 3"}},
 		{SP_BUTTON_4             , Parameter_Value{ "Button4"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 4"}},
 		{SP_BUTTON_10            , Parameter_Value{ "Button10"         , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 10"}},
-		{SP_JOYSTICK_DEVICE      , Parameter_Value{ "JoystickDevice"   , PARAM_STRING, Persistence::PERSISTENT, std::string("/dev/input/js0"), "Joystick device"}}
 	};
 
 	ParameterType GetParameterType(Parameter parameter) {

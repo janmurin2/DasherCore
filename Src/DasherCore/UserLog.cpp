@@ -22,7 +22,6 @@ static UserLogParamMask s_UserLogParamMaskTable [] = {
                             userLogParamForceInTrial |
                             userLogParamShortInCycle},
   {LP_UNIFORM,              userLogParamOutputToSimple},
-  {LP_YSCALE,               userLogParamOutputToSimple},
   {LP_LANGUAGE_MODEL_ID,    userLogParamOutputToSimple},
   {LP_LM_MAX_ORDER,         userLogParamOutputToSimple},
   {LP_LM_EXCLUSION,         userLogParamOutputToSimple},

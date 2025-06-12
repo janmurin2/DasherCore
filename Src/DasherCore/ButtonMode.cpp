@@ -25,9 +25,9 @@ static SModuleSettings sSettings[] = {
    * however the code seems to use ratio = (129/127)^-r, instead of
    * ratio = exp(r/128) used in the design document
    */
-  {LP_R, T_LONG, -89, 89, 1, 10, _("Box non-uniformity")},
+  {LP_R, T_LONG, -89, 89, 1, 10, _("Box non-uniformity")}
   /* TRANSLATORS: Intercept keyboard events for 'special' keys even when the Dasher window doesn't have keyboard focus.*/
-  {BP_GLOBAL_KEYBOARD, T_BOOL, -1, -1, -1, -1, _("Global keyboard grab")}
+  // {BP_GLOBAL_KEYBOARD, T_BOOL, -1, -1, -1, -1, _("Global keyboard grab")}
 };
 
 void CButtonMode::GetUISettings(std::vector<Dasher::Parameter>& List) {

@@ -21,7 +21,7 @@ CDasherButtons::~CDasherButtons()
 
 void CDasherButtons::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CStaticFilter::GetUISettings(List);
-  AddSettings(List, {LP_BUTTON_SCAN_TIME});
+  if(m_bMenu) AddSettings(List, {LP_BUTTON_SCAN_TIME});
 }
 
 void CDasherButtons::Activate() {
