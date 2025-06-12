@@ -40,7 +40,7 @@ class CDynamicFilter : public CInputFilter {
   
   void pause() override {m_bPaused = true;}
 
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
   
  protected:
   ///wraps Model's one-step method to compute the number of steps and minsize

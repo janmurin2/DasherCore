@@ -24,32 +24,32 @@ void CSettingsStore::LoadPersistent() {
 
 void CSettingsStore::AddParameters(const std::unordered_map<Parameter, const Settings::Parameter_Value> table) {
 
-	for(auto [key, value] : table)
+	for(const auto& [key, value] : table)
 	{
-		parameters_[key] = value;
+		parameters_.emplace(std::make_pair(key, value));
 
-		if(std::holds_alternative<bool>(parameters_[key].value))
+		if(std::holds_alternative<bool>(parameters_.at(key).value))
 		{
-			DASHER_ASSERT(parameters_[key].type == Settings::ParamBool);
-			if (!LoadSetting(parameters_[key].name, &std::get<bool>(parameters_[key].value))) {
-		      parameters_[key].value = value.value;
-		      SaveSetting(value.name, std::get<bool>(value.value));
+			DASHER_ASSERT(parameters_.at(key).type == Settings::ParamBool);
+			if (!LoadSetting(parameters_.at(key).storageName, &std::get<bool>(parameters_.at(key).value))) {
+		      parameters_.at(key).value = value.value;
+		      SaveSetting(value.storageName, std::get<bool>(value.value));
 		    }
 		}else
-		if(std::holds_alternative<long>(parameters_[key].value))
+		if(std::holds_alternative<long>(parameters_.at(key).value))
 		{
-			DASHER_ASSERT(parameters_[key].type == Settings::ParamLong);
-			if (!LoadSetting(parameters_[key].name, &std::get<long>(parameters_[key].value))) {
-		      parameters_[key].value = value.value;
-		      SaveSetting(value.name, std::get<long>(value.value));
+			DASHER_ASSERT(parameters_.at(key).type == Settings::ParamLong);
+			if (!LoadSetting(parameters_.at(key).storageName, &std::get<long>(parameters_.at(key).value))) {
+		      parameters_.at(key).value = value.value;
+		      SaveSetting(value.storageName, std::get<long>(value.value));
 		    }
 		}else
-		if(std::holds_alternative<std::string>(parameters_[key].value))
+		if(std::holds_alternative<std::string>(parameters_.at(key).value))
 		{
-			DASHER_ASSERT(parameters_[key].type == Settings::ParamString);
-			if (!LoadSetting(parameters_[key].name, &std::get<std::string>(parameters_[key].value))) {
-		      parameters_[key].value = value.value;
-		      SaveSetting(value.name, std::get<std::string>(value.value));
+			DASHER_ASSERT(parameters_.at(key).type == Settings::ParamString);
+			if (!LoadSetting(parameters_.at(key).storageName, &std::get<std::string>(parameters_.at(key).value))) {
+		      parameters_.at(key).value = value.value;
+		      SaveSetting(value.storageName, std::get<std::string>(value.value));
 		    }
 		}
 	}
@@ -58,7 +58,7 @@ void CSettingsStore::AddParameters(const std::unordered_map<Parameter, const Set
 // Return 0 on success, an error string on failure.
 const char * CSettingsStore::ClSet(const std::string &strKey, const std::string &strValue) {
 	for (auto& [key, value] : parameters_) {
-		if(strKey != value.name) continue;
+		if(strKey != value.storageName) continue;
 		switch (value.type) {
 			case Settings::PARAM_BOOL: 
 				if ((strValue == "0") || (strValue == "true") || (strValue == "True")){
@@ -109,7 +109,7 @@ void CSettingsStore::SetParameter(Parameter parameter, T value)
 	OnParameterChanged.Broadcast(parameter);
 	if (parameter_value->second.persistence == Settings::Persistence::PERSISTENT) {
 		// Write out to permanent storage
-		SaveSetting(parameter_value->second.name, value);
+		SaveSetting(parameter_value->second.storageName, value);
 	}
 }
 

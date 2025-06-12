@@ -14,7 +14,7 @@ void CStaticFilter::ScheduleZoom(CDasherModel *pModel, myint y1, myint y2) {
     (m_pModel = pModel)->ScheduleZoom(y1,y2,m_pSettingsStore->GetLongParameter(LP_ZOOMSTEPS));
 }
 
-void CStaticFilter::GetUISettings(UISettingList& List) {
+void CStaticFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CInputFilter::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_ZOOMSTEPS, "LP_ZOOMSTEPS", "", false, 1, 1000, 1);
+    AddSettings(List, {LP_ZOOMSTEPS});
 }

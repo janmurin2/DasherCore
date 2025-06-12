@@ -19,9 +19,9 @@ CDasherButtons::~CDasherButtons()
   delete[] m_pBoxes;
 } 
 
-void CDasherButtons::GetUISettings(UISettingList& List) {
+void CDasherButtons::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CStaticFilter::GetUISettings(List);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_BUTTON_SCAN_TIME, "LP_BUTTON_SCAN_TIME", "", false, 0, 2000, 100);
+  AddSettings(List, {LP_BUTTON_SCAN_TIME});
 }
 
 void CDasherButtons::Activate() {

@@ -9,13 +9,9 @@ static SModuleSettings sSettings[] = {
   {LP_ZOOMSTEPS, T_LONG, 1, 63, 1, 1, _("Frames over which to perform zoom")},
 };
 
-void CStylusFilter::GetUISettings(UISettingList& List) {
+void CStylusFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CDefaultFilter::GetUISettings(List);
-
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_ZOOMSTEPS, "LP_ZOOMSTEPS", "", false, 1, 1000, 1);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_S, "LP_S", "", false, 1, 1000, 1);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_MAXZOOM, "LP_MAXZOOM", "", false, 1, 1000, 1);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_TAP_TIME, "LP_TAP_TIME", "", false, 1, 1000, 1);
+  AddSettings(List, {LP_ZOOMSTEPS, LP_S, LP_MAXZOOM, LP_TAP_TIME});
 
   RemoveDeclaredSetting(List, Dasher::Parameter::BP_MOUSEPOS_MODE);
   RemoveDeclaredSetting(List, Dasher::Parameter::BP_CIRCLE_START);

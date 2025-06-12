@@ -160,7 +160,7 @@ namespace Dasher{
 
 		for(auto& [key, value] : parameter_defaults)
 		{
-			if(value.name == parameterName) return {key, value.type};
+			if(value.storageName == parameterName) return {key, value.type};
 		}
 		return {PM_INVALID, PARAM_INVALID};
 	}
@@ -168,7 +168,7 @@ namespace Dasher{
 	std::string GetParameterName(Parameter parameter) {
 		if (parameter_defaults.find(parameter) != parameter_defaults.end())
 		{
-			return parameter_defaults.at(parameter).name;
+			return parameter_defaults.at(parameter).storageName;
 		}
 		return "";
 	}

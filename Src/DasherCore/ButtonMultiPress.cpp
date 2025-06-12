@@ -19,6 +19,7 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "DasherInterfaceBase.h"
+#include "Parameters.h"
 #include "ButtonMultiPress.h"
 
 using namespace Dasher;
@@ -27,10 +28,9 @@ CButtonMultiPress::CButtonMultiPress(CSettingsStore* pSettingsStore, CDasherInte
   : CDynamicButtons(pSettingsStore, pInterface, pFramerate, szName) {
 }
 
-void CButtonMultiPress::GetUISettings(UISettingList& List) {
+void CButtonMultiPress::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CDynamicButtons::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_HOLD_TIME, "LP_HOLD_TIME", "", false, 1, 1000, 1);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_MULTIPRESS_TIME, "LP_MULTIPRESS_TIME", "", false, 1, 1000, 1);
+    AddSettings(List, {LP_HOLD_TIME, LP_MULTIPRESS_TIME});
 }
 
 void CButtonMultiPress::Timer(unsigned long iTime, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel, CExpansionPolicy **pol) {

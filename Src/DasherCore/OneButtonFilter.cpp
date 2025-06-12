@@ -16,11 +16,9 @@ static SModuleSettings sSettings[] = {
   {LP_DYNAMIC_BUTTON_LAG, T_LONG, 0, 1000, 1, 25, _("Lag before user actually pushes button (ms)")},
 };
 
-void COneButtonFilter::GetUISettings(UISettingList& List) {
-    CStaticFilter::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_DYNAMIC_BUTTON_LAG, "LP_DYNAMIC_BUTTON_LAG", "", false, 0, 1000, 25);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_STATIC1B_TIME, "LP_STATIC1B_TIME", "", false, 100, 5000, 100);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_STATIC1B_ZOOM, "LP_STATIC1B_ZOOM", "", false, 1, 16, 1);
+void COneButtonFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
+  CStaticFilter::GetUISettings(List);
+  AddSettings(List, {LP_DYNAMIC_BUTTON_LAG, LP_STATIC1B_TIME, LP_STATIC1B_ZOOM});
 }
 
 COneButtonFilter::COneButtonFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface)

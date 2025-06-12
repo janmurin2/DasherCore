@@ -38,7 +38,7 @@ class CButtonMultiPress : public CDynamicButtons {
   void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
 
   void pause() override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
  protected:
   virtual unsigned int maxClickCount()=0;

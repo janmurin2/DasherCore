@@ -21,9 +21,9 @@ static SModuleSettings sSettings[] = {
   {BP_GLOBAL_KEYBOARD, T_BOOL, -1, -1, -1, -1, _("Global keyboard grab")}
 };
 
-void CCompassMode::GetUISettings(UISettingList& List) {
+void CCompassMode::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CDasherButtons::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_RIGHTZOOM, "LP_RIGHTZOOM", "", false, 1024, 10240, 1024);
+    AddSettings(List, {LP_RIGHTZOOM});
 }
 
 // FIX iStyle == 2

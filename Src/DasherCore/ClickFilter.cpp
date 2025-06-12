@@ -19,13 +19,9 @@ static SModuleSettings sSettings[] = {
   {BP_CURVE_MOUSE_LINE, T_BOOL, -1, -1, -1, -1, _("Curve lines to follow the non-linearity of the view transform")},
 };
 
-void CClickFilter::GetUISettings(UISettingList& List) {
+void CClickFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CStaticFilter::GetUISettings(List);
-  DeclareSwitchSetting(List, Dasher::Parameter::BP_DRAW_MOUSE_LINE, "BP_DRAW_MOUSE_LINE", "", false);
-  DeclareSwitchSetting(List, Dasher::Parameter::BP_CURVE_MOUSE_LINE, "BP_CURVE_MOUSE_LINE", "", false);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_LINE_WIDTH, "LP_LINE_WIDTH", "", false, 1, 1000, 1);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_S, "LP_S", "", false, 1, 1000, 1);
-  DeclareSpinButtonSetting(List, Dasher::Parameter::LP_MAXZOOM, "LP_MAXZOOM", "", false, 1, 1000, 1);
+  AddSettings(List, {BP_DRAW_MOUSE_LINE,BP_CURVE_MOUSE_LINE,LP_LINE_WIDTH,LP_S, LP_MAXZOOM});
 }
 
 bool CClickFilter::DecorateView(CDasherView *pView, CDasherInput *pInput) {

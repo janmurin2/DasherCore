@@ -30,11 +30,9 @@ static SModuleSettings sSettings[] = {
   {BP_GLOBAL_KEYBOARD, T_BOOL, -1, -1, -1, -1, _("Global keyboard grab")}
 };
 
-void CButtonMode::GetUISettings(UISettingList& List) {
+void CButtonMode::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CDasherButtons::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_B, "LP_B", "", false, 2, 10, 1);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_S, "LP_S", "", false, 0, 256, 1);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_R, "LP_R", "", false, -89, 89, 10);
+    AddSettings(List, {LP_B, LP_S, LP_R});
 }
 
 // FIX iStyle == 0

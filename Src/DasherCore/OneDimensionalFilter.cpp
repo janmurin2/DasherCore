@@ -9,7 +9,7 @@ using namespace Dasher;
   : COneDimensionalFilter(pSettingsStore, pInterface, m_pDasherModel, 4, _("One Dimensional Mode")) {
 }*/
 
-void COneDimensionalFilter::GetUISettings(UISettingList& List) {
+void COneDimensionalFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CDefaultFilter::GetUISettings(List);
   RemoveDeclaredSetting(List, Dasher::Parameter::BP_REMAP_XTREME);
   RemoveDeclaredSetting(List, Dasher::Parameter::LP_GEOMETRY);

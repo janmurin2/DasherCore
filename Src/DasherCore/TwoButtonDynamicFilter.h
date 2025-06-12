@@ -35,7 +35,7 @@ class CTwoButtonDynamicFilter : public CButtonMultiPress {
   bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
 
   bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
   bool GetMinWidth(int &iMinWidth) override;
 

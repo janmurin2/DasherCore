@@ -27,7 +27,7 @@ class CClickFilter : public CStaticFilter, private CZoomAdjuster {
   virtual bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
   virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   virtual bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
  private:
   //for mouse lines

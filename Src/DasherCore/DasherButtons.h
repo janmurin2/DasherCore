@@ -22,7 +22,7 @@ class CDasherButtons : public CStaticFilter
   void Timer(unsigned long Time, CDasherView *pView, CDasherInput *pInput, CDasherModel *m_pDasherModel, CExpansionPolicy **pol) override;
   void Activate() override;
 
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
   
   struct SBoxInfo {
     int iTop;

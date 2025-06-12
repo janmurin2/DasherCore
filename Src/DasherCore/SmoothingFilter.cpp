@@ -2,13 +2,9 @@
 #include <cmath>
 #include <algorithm>
 
-void Dasher::CSmoothingFilter::GetUISettings(UISettingList& List) {
+void Dasher::CSmoothingFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CPressFilter::GetUISettings(List);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_SMOOTH_TAU, "LP_SMOOTH_TAU", "", false, 1, 1000, 1);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_DRAW_MOUSE_LINE, "BP_SMOOTH_DRAW_MOUSE_LINE", "", false);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_DRAW_MOUSE, "BP_SMOOTH_DRAW_MOUSE", "", false);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_ONLY_FORWARD, "BP_SMOOTH_ONLY_FORWARD", "", false);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_SMOOTH_PRESS_MODE, "BP_SMOOTH_PRESS_MODE", "", false);
+	AddSettings(List, {LP_SMOOTH_TAU, BP_SMOOTH_DRAW_MOUSE_LINE, BP_SMOOTH_DRAW_MOUSE, BP_SMOOTH_ONLY_FORWARD, BP_SMOOTH_PRESS_MODE});
 }
 
 Dasher::CSmoothingFilter::CSmoothingFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase* pInterface, CFrameRate* pFramerate, const char *szName) : CPressFilter(pSettingsStore, pInterface, pFramerate, szName)

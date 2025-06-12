@@ -24,7 +24,7 @@ class CDefaultFilter : public CDynamicFilter {
   void Activate() override;
   void Deactivate() override;
   bool GetSettings(SModuleSettings **, int *) override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
   void pause() override;
   //pauses, and calls the interface's Done() method

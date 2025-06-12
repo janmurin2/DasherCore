@@ -21,8 +21,8 @@
 #pragma once
 
 #include "../Common/ModuleSettings.h"
+#include "Parameters.h"
 #include <algorithm>
-#include <memory>
 #include <vector>
 
 class CDasherModule;
@@ -44,20 +44,12 @@ private:
     const char *m_szName;
 
 public:
-    // "New" UI Settings definitions:
-    typedef std::vector<std::unique_ptr<Dasher::Settings::ModuleSetting>> UISettingList;
-    // Fill this list using the provided methods below to define which UI components could be used by the UI to change your respective setting
-    virtual void GetUISettings(UISettingList& List){};
-    static void DeclareTextboxSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting){List.push_back(std::make_unique<Dasher::Settings::TextboxSetting>(Param, Name, Description, AdvancedSetting));}
-    static void DeclareSliderSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SliderSetting>(Param, Name, Description, AdvancedSetting, min, max, step));}
-    static void DeclareSpinButtonSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, int min, int max, int step){List.push_back(std::make_unique<Dasher::Settings::SpinSetting>(Param, Name, Description, AdvancedSetting, min, max, step));}
-    static void DeclareDropdownSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting, std::unordered_map<std::string, int> Enums){List.push_back(std::make_unique<Dasher::Settings::EnumSetting>(Param, Name, Description, AdvancedSetting, Enums));}
-    static void DeclareSwitchSetting(UISettingList& List, Dasher::Parameter Param, std::string Name, std::string Description, bool AdvancedSetting){List.push_back(std::make_unique<Dasher::Settings::SwitchSetting>(Param, Name, Description, AdvancedSetting));}
+    // Fill this list using the provided method below or via adding to the vector yourself to define which settings should be changable in the UI for the respective module
+    virtual void GetUISettings(std::vector<Dasher::Parameter>& List){};
+    static void AddSettings(std::vector<Dasher::Parameter>& List, std::vector<Dasher::Parameter> NewParameters){List.insert(List.end(), NewParameters.begin(), NewParameters.end());}
     // Can be used if a specific setting is added by the parent class but overridden or not used by the childclass 
-    static void RemoveDeclaredSetting(UISettingList& List, Dasher::Parameter Param){
-        List.erase(std::remove_if(List.begin(), List.end(), [&Param](std::unique_ptr<Dasher::Settings::ModuleSetting>& elem){
-            return elem->Param == Param;
-        }), List.end());
+    static void RemoveDeclaredSetting(std::vector<Dasher::Parameter>& List, Dasher::Parameter Param){
+        List.erase(std::remove(List.begin(), List.end(), Param), List.end());
     }
 };
 /// @}

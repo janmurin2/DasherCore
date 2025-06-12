@@ -67,10 +67,7 @@ void CDynamicFilter::run(unsigned long Time) {
   m_iStartTime = Time;
 }
 
-void CDynamicFilter::GetUISettings(UISettingList& List) {
+void CDynamicFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CInputFilter::GetUISettings(List);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_EXACT_DYNAMICS, "BP_EXACT_DYNAMICS", "", false);
-    DeclareSwitchSetting(List, Dasher::Parameter::BP_SLOW_START, "BP_SLOW_START", "", false);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_X_LIMIT_SPEED, "LP_X_LIMIT_SPEED", "", false, 1, 1000, 1);
-    DeclareSpinButtonSetting(List, Dasher::Parameter::LP_SLOW_START_TIME, "LP_SLOW_START_TIME", "", false, 1, 1000, 1);
+    AddSettings(List, {BP_EXACT_DYNAMICS, BP_SLOW_START, LP_X_LIMIT_SPEED, LP_SLOW_START_TIME});
 }

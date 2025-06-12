@@ -18,7 +18,7 @@ class CDemoFilter : public CDynamicFilter {
   virtual void Activate() override;
   virtual void Deactivate() override;
 
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
  private:
   double m_dSpring, m_dNoiseNew, m_dNoiseOld;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <string>
 #include <unordered_map>
 #include <variant>
@@ -71,13 +72,48 @@ namespace Dasher
       PARAM_INVALID
     };
 
+	// Suggestion for UIControl
+	enum UIControlType
+	{
+		Switch, // Boolean switch or check mark
+		TextField, // Free input text field
+		Slider, // Slider type input
+		Enum, // Dropdown or select type
+		Step, // SpinButton (like textfield, but for numbers with a [+] and [-] button)
+		None
+	};
+
     // Values
     struct Parameter_Value {
-		std::string name;
+		std::string storageName; //short and containing no spaces for storage
 		Settings::ParameterType type = Settings::PARAM_INVALID;
-		Persistence persistence = Persistence::PERSISTENT;
+		Settings::Persistence persistence = Persistence::PERSISTENT;
 		std::variant<bool, long, std::string> value;
-        std::string human_readable;
+        std::string humanDescription; //human-readable description to display in UI
+        std::string humanName; //human-readable name for setting to display in UI
+		Settings::UIControlType suggestedUI = UIControlType::None;
+		bool advancedSetting = false;
+		//range for sliders and step like controls
+		int min = 0;
+        int max = 0;
+        int divisor = 1; // used to adjust the 'unit' in the UI
+        int step = 1;
+		std::map<std::string, int> possibleValues; //used for enum values to display in dropdown menus
+
+		Parameter_Value(std::string storageName, Settings::ParameterType type, Persistence persistence, std::variant<bool, long, std::string> value, std::string humanDescription, std::string humanName = "", Settings::UIControlType suggestedUI = UIControlType::None, bool advancedSetting = false) :
+			storageName(storageName), type(type), persistence(persistence), value(value), humanDescription(humanDescription), humanName(humanName), suggestedUI(suggestedUI), advancedSetting(advancedSetting){}
+
+		Parameter_Value(std::string storageName, Settings::ParameterType type, Persistence persistence, std::variant<bool, long, std::string> value, std::string humanDescription, std::string humanName, Settings::UIControlType suggestedUI, int min, int max, int divisor, int step, bool advancedSetting) :
+			storageName(storageName), type(type), persistence(persistence), value(value), humanDescription(humanDescription), humanName(humanName), suggestedUI(suggestedUI), min(min), max(max), divisor(divisor), step(step), advancedSetting(advancedSetting){}
+
+		Parameter_Value(std::string storageName, Settings::ParameterType type, Persistence persistence, std::variant<bool, long, std::string> value, std::string humanDescription, std::string humanName, Settings::UIControlType suggestedUI, std::map<std::string, int> possibleValues, bool advancedSetting) :
+			storageName(storageName), type(type), persistence(persistence), value(value), humanDescription(humanDescription), humanName(humanName), suggestedUI(suggestedUI), possibleValues(possibleValues), advancedSetting(advancedSetting){}
+			
+		// for sorting in UI
+		bool operator<(const Parameter_Value& other) const
+		{
+			return humanName < other.humanName;
+		}
 	};
 
     extern const std::unordered_map<Parameter, const Parameter_Value> parameter_defaults;

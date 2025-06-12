@@ -13,7 +13,7 @@ namespace Dasher {
       CStaticFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pIntf, const char *szName);
       void pause() override;
 
-      virtual void GetUISettings(UISettingList& List) override;
+      virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
     protected:
       void ScheduleZoom(CDasherModel *pModel, myint y1, myint y2);

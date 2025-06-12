@@ -19,7 +19,7 @@ class CCompassMode : public CDasherButtons
   bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
 
   bool GetSettings(SModuleSettings **pSettings, int *iCount) override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
  protected:
   void SetupBoxes() override;

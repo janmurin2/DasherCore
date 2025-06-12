@@ -21,7 +21,7 @@ class CStylusFilter : public CDefaultFilter, protected CZoomAdjuster {
   void pause() override;
   virtual void KeyDown(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
   virtual void KeyUp(unsigned long iTime, Keys::VirtualKey Key, CDasherView *pView, CDasherInput *pInput, CDasherModel *pModel) override;
-  virtual void GetUISettings(UISettingList& List) override;
+  virtual void GetUISettings(std::vector<Dasher::Parameter>& List) override;
 
  protected:
   ///Transform coordinates of a click, to get location to zoom into.
