@@ -8,11 +8,13 @@
 #include "DasherModule.h"
 #include "ModuleManager.h"
 #include "DasherView.h"
+#include "DasherModel.h"
 
 namespace Dasher {
   class CDasherInput;
   class CDasherCoordInput;
   class CScreenCoordInput;
+  class CDasherVectorInput;
   class CDasherInterfaceBase;
 }
 /// \defgroup Input Input devices
@@ -91,3 +93,29 @@ public:
 };
 
 /// \}
+
+/// Abstract superclasses for CDasherInputs which natively provides [0,1] inputs;
+/// Coordinate system spans from bottom left (-1,-1) to top right (1,1)
+/// (=> Subclasses must implement GetVectorCoords)
+class Dasher::CDasherVectorInput : public Dasher::CDasherCoordInput {
+public:
+  CDasherVectorInput(const char *szName) : CDasherCoordInput(szName) {}
+  
+  virtual bool GetVectorCoords(float &VectorX, float &VectorY) = 0;
+
+  virtual bool GetDasherCoords(myint &iDasherX, myint &iDasherY, CDasherView *pView)  {
+    float iX, iY;
+    if (!GetVectorCoords(iX, iY)) return false;
+
+    const CDasherView::DasherCoordScreenRegion vR = pView->VisibleRegion();
+    const myint top = vR.minY - CDasherModel::ORIGIN_Y;
+    const myint bottom = vR.maxY - CDasherModel::ORIGIN_Y;
+    const myint left = vR.maxX - CDasherModel::ORIGIN_X;
+    const myint right = vR.minX - CDasherModel::ORIGIN_X;
+
+    iDasherX = ((iX > 0) ? right * iX : left * -iX) + CDasherModel::ORIGIN_X;
+    iDasherY = ((iY > 0) ? top * iY : bottom * -iY) + CDasherModel::ORIGIN_Y;
+
+    return true;
+  }
+};
