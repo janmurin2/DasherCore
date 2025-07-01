@@ -94,28 +94,31 @@ public:
 
 /// \}
 
-/// Abstract superclasses for CDasherInputs which natively provides [0,1] inputs;
+/// Abstract superclasses for CDasherInputs which natively provides [0,1] inputs in screenspace (not subject to non-linearity);
 /// Coordinate system spans from bottom left (-1,-1) to top right (1,1)
 /// (=> Subclasses must implement GetVectorCoords)
-class Dasher::CDasherVectorInput : public Dasher::CDasherCoordInput {
+class Dasher::CDasherVectorInput : public Dasher::CScreenCoordInput {
 public:
-  CDasherVectorInput(const char *szName) : CDasherCoordInput(szName) {}
+  CDasherVectorInput(const char *szName) : CScreenCoordInput(szName) {}
   
   virtual bool GetVectorCoords(float &VectorX, float &VectorY) = 0;
-
-  virtual bool GetDasherCoords(myint &iDasherX, myint &iDasherY, CDasherView *pView)  {
-    float iX, iY;
-    if (!GetVectorCoords(iX, iY)) return false;
-
-    const CDasherView::DasherCoordScreenRegion vR = pView->VisibleRegion();
-    const myint top = vR.minY - CDasherModel::ORIGIN_Y;
-    const myint bottom = vR.maxY - CDasherModel::ORIGIN_Y;
-    const myint left = vR.maxX - CDasherModel::ORIGIN_X;
-    const myint right = vR.minX - CDasherModel::ORIGIN_X;
-
-    iDasherX = ((iX > 0) ? right * iX : left * -iX) + CDasherModel::ORIGIN_X;
-    iDasherY = ((iY > 0) ? top * iY : bottom * -iY) + CDasherModel::ORIGIN_Y;
-
+  
+  virtual bool GetScreenCoords(screenint &iX, screenint &iY, CDasherView *pView) {
+    float inputX, inputY;
+    if (!GetVectorCoords(inputX, inputY)) return false;
+    
+    Dasher::screenint originX, originY;
+    pView->Dasher2Screen(CDasherModel::ORIGIN_X,CDasherModel::ORIGIN_Y, originX, originY);
+    
+    const CDasherView::ScreenRegion vR = {0,0,pView->Screen()->GetWidth(), pView->Screen()->GetHeight()};
+    const myint top = vR.minY - originY;
+    const myint bottom = vR.maxY - originY;
+    const myint left = vR.minX - originX;
+    const myint right = vR.maxX - originX;
+  
+    iX = ((inputX > 0) ? right * inputX : left * -inputX) + originX;
+    iY = ((inputY > 0) ? top * inputY : bottom * -inputY) + originY;
+  
     return true;
   }
 };
