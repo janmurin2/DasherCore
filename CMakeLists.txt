@@ -59,6 +59,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherModel.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherModule.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherNode.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherTypes.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherView.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DasherViewSquare.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/DefaultFilter.cpp

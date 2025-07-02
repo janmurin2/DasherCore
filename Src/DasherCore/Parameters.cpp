@@ -138,12 +138,8 @@ namespace Dasher{
 		{SP_INPUT_FILTER         , Parameter_Value{ "InputFilter"      , PARAM_STRING, Persistence::PERSISTENT, std::string("Normal Control"), "Input filter used to provide the current control mode"}},
 #endif                            
 		{SP_INPUT_DEVICE         , Parameter_Value{ "InputDevice"      , PARAM_STRING, Persistence::PERSISTENT, std::string("Mouse Input")   , "Driver for the input device"}},
-		{SP_BUTTON_0             , Parameter_Value{ "Button0"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 0"}},
-		{SP_BUTTON_1             , Parameter_Value{ "Button1"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 1"}},
-		{SP_BUTTON_2             , Parameter_Value{ "Button2"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 2"}},
-		{SP_BUTTON_3             , Parameter_Value{ "Button3"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 3"}},
-		{SP_BUTTON_4             , Parameter_Value{ "Button4"          , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 4"}},
-		{SP_BUTTON_10            , Parameter_Value{ "Button10"         , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Assignment to button 10"}},
+		{SP_BUTTON_MAPPINGS      , Parameter_Value{ "ButtonMap"        , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Button assignments used in UI"}},
+		{SP_JOYSTICK_DEVICE      , Parameter_Value{ "JoystickDevice"   , PARAM_STRING, Persistence::PERSISTENT, std::string("")			  , "UUID of Joystick Device"}}
 	};
 
 	ParameterType GetParameterType(Parameter parameter) {

@@ -102,6 +102,8 @@ namespace Keys
 		Tertiary_Input = 102, //Typically Third Mouse Button
 		Invalid_Key = -1
 	};
+  const std::string& VirtualKeyToString(VirtualKey key);
+  const VirtualKey StringToVirtualKey(const std::string& name);
 }
 
   // Types added so model can report back what it has done for
