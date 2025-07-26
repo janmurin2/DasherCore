@@ -129,7 +129,7 @@ namespace Dasher{
 		{SP_ALPHABET_2           , Parameter_Value{ "Alphabet2"        , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Alphabet History 2"}},
 		{SP_ALPHABET_3           , Parameter_Value{ "Alphabet3"        , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Alphabet History 3"}},
 		{SP_ALPHABET_4           , Parameter_Value{ "Alphabet4"        , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "Alphabet History 4"}},
-		{ SP_COLOUR_ID           , Parameter_Value{ "ColourID"         , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "ColourID" }},
+		{ SP_COLOUR_ID           , Parameter_Value{ "ColourID"         , PARAM_STRING, Persistence::PERSISTENT, std::string("Default")       , "ColourID" }},
 		{SP_DASHER_FONT          , Parameter_Value{ "DasherFont"       , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "DasherFont"}},
 		{SP_GAME_TEXT_FILE       , Parameter_Value{ "GameTextFile"     , PARAM_STRING, Persistence::PERSISTENT, std::string("")              , "User-specified file with strings to practice writing"}},
 #ifdef TARGET_OS_IPHONE           
