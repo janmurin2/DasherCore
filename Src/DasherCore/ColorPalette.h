@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <array>
 #include <string>
 
 namespace Dasher {
@@ -93,7 +94,7 @@ namespace Dasher {
 			std::pair<Color,Color> groupLabelColor = {undefinedColor, undefinedColor};
 		} GroupColorInfo;
 
-		ColorPalette(ColorPalette* ParentPalette, std::string ParentPaletteName, const std::unordered_map<NamedColor::knownColorName, Color>& NamedColors, const std::unordered_map<std::string, GroupColorInfo>& GroupColors, std::string PaletteName);
+		ColorPalette(ColorPalette* ParentPalette, std::string ParentPaletteName, const std::unordered_map<NamedColor::knownColorName, Color>& NamedColors, const std::unordered_map<std::string, GroupColorInfo>& GroupColors, std::array<Color,4> UIPreviewColors, std::string PaletteName);
         const Color& GetAltColor(const std::vector<Color>& NormalColors, const std::vector<Color>& AltColors, bool useAlt, int Index) const;
         const Color& GetAltColor(const Color& NormalColor, const Color& AltColor, bool useAlt) const;
 
@@ -103,6 +104,8 @@ namespace Dasher {
 		std::string PaletteName;
 
 		const Color& GetNamedColor(const NamedColor::knownColorName& NamedColor, bool AskParent = true) const;
+
+		const std::array<Color,4>& GetUIPreviewColors() const;
 
 		const Color& GetGroupColor(const std::string& GroupName, const bool& UseAltColor) const;
         const Color& GetGroupOutlineColor(const std::string& GroupName, const bool& UseAltColor, bool UseDefaultColor = true) const;
@@ -114,6 +117,7 @@ namespace Dasher {
     private:
 	    std::unordered_map<NamedColor::knownColorName, Color> NamedColors;
 		std::unordered_map<std::string, GroupColorInfo> GroupColors;
+		std::array<Color,4> UIPreviewColors;
 	};
 
    

@@ -77,12 +77,18 @@ bool CColorIO::Parse(pugi::xml_document& document, const std::string, bool bUser
 
 	std::unordered_map<NamedColor::knownColorName, ColorPalette::Color> NamedColors;
 	std::unordered_map<std::string, ColorPalette::GroupColorInfo> GroupColors;
+	std::vector<ColorPalette::Color> UIPreviewColors;
 	std::string parentName = outer.attribute("parentName").as_string(HardcodedDefaultPalette->PaletteName.c_str());
 	std::string colorSchemeName = outer.attribute("name").as_string(); // definitely exists, we checked above
 
 	for(pugi::xml_attribute attribute : outer.attributes())
 	{
 		if(strcmp(attribute.name(),"parentName") == 0 || strcmp(attribute.name(),"name") == 0) continue;
+
+		if(strcmp(attribute.name(),"uiPreviewColors") == 0){
+			UIPreviewColors = GetAttributeAsColorList(attribute);
+			continue;
+		}
 
 		NamedColors[attribute.name()] = ColorPalette::Color(attribute.as_string());
 	}
@@ -106,8 +112,24 @@ bool CColorIO::Parse(pugi::xml_document& document, const std::string, bool bUser
 		GroupColors[groupInfo.attribute("name").as_string()] = group;
 	}
 
+	//could not be loaded, determine default colors by search first group >=4 and sample four equally spaced colors
+	if(UIPreviewColors.size() != 4){
+		UIPreviewColors.clear();
+		for(auto& [name, group] : GroupColors){
+			if(group.nodeColorSequence.size() >= 4){
+				UIPreviewColors.push_back(group.nodeColorSequence.front());
+				UIPreviewColors.push_back(group.nodeColorSequence[group.nodeColorSequence.size() / 3]);
+				UIPreviewColors.push_back(group.nodeColorSequence[group.nodeColorSequence.size() / 3 * 2]);
+				UIPreviewColors.push_back(group.nodeColorSequence.back());
+				break;
+			}
+		}
+	}
+	std::array<ColorPalette::Color, 4> uiColorsArray;
+	std::copy_n(std::make_move_iterator(UIPreviewColors.begin()), uiColorsArray.size(), uiColorsArray.begin());
+
 	//"HardcodedDefault" is the parent for now, later on the parents get relinked by looking up the parentNames
-	KnownPalettes[colorSchemeName] = new ColorPalette(HardcodedDefaultPalette, parentName, NamedColors, GroupColors, colorSchemeName);
+	KnownPalettes[colorSchemeName] = new ColorPalette(HardcodedDefaultPalette, parentName, NamedColors, GroupColors, uiColorsArray, colorSchemeName);
 
 	return true;
 }
@@ -170,5 +192,12 @@ void CColorIO::CreateDefault() {
         {NamedColor::gameGuide, ColorPalette::Color(255, 100, 204, 255)}
 	};
 
-	HardcodedDefaultPalette = new ColorPalette(nullptr, "NonExistentRootRootPalette", NamedColors, {}, "HardcodedDefault"); //TODO: No groups for now, but will later be added
+	std::array<ColorPalette::Color, 4> uiColorsArray = {
+	ColorPalette::Color(0, 0, 0, 255),
+	ColorPalette::Color(255, 0, 255, 255),
+	ColorPalette::Color(0, 0, 0, 255),
+	ColorPalette::Color(255, 0, 255, 255)
+	};
+
+	HardcodedDefaultPalette = new ColorPalette(nullptr, "NonExistentRootRootPalette", NamedColors, {}, uiColorsArray, "HardcodedDefault"); //TODO: No groups for now, but will later be added
 }

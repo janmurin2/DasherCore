@@ -65,8 +65,8 @@ ColorPalette::Color ColorPalette::Color::lerp(const Color& ColorA, const Color& 
 
 ColorPalette::ColorPalette(ColorPalette* ParentPalette, std::string ParentPaletteName,
                            const std::unordered_map<NamedColor::knownColorName, Color>& NamedColors,
-    const std::unordered_map<std::string, GroupColorInfo>& GroupColors, std::string PaletteName) : ParentPalette(ParentPalette), ParentPaletteName(
-                                                                              std::move(ParentPaletteName)), NamedColors(NamedColors), GroupColors(GroupColors), PaletteName(PaletteName)
+    const std::unordered_map<std::string, GroupColorInfo>& GroupColors, std::array<Color,4> UIPreviewColors, std::string PaletteName) : ParentPalette(ParentPalette), ParentPaletteName(
+                                                                              std::move(ParentPaletteName)), NamedColors(NamedColors), GroupColors(GroupColors), UIPreviewColors(UIPreviewColors), PaletteName(PaletteName)
 {
 }
 
@@ -91,6 +91,11 @@ const ColorPalette::Color& ColorPalette::GetNamedColor(const NamedColor::knownCo
         return search->second;
     }
     return (ParentPalette && AskParent) ? ParentPalette->GetNamedColor(NamedColor) : undefinedColor;
+}
+
+const std::array<ColorPalette::Color,4>& ColorPalette::GetUIPreviewColors() const
+{
+    return UIPreviewColors;
 }
 
 const ColorPalette::Color& ColorPalette::GetGroupColor(const std::string& GroupName, const bool& UseAltColor) const
