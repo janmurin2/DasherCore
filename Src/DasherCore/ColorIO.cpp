@@ -124,6 +124,15 @@ bool CColorIO::Parse(pugi::xml_document& document, const std::string, bool bUser
 				break;
 			}
 		}
+		// no fitting group found use default (error) colors
+		if(UIPreviewColors.size() == 0){
+			UIPreviewColors = {
+			ColorPalette::Color(0, 0, 0, 255),
+			ColorPalette::Color(255, 0, 255, 255),
+			ColorPalette::Color(0, 0, 0, 255),
+			ColorPalette::Color(255, 0, 255, 255)
+			};
+		}
 	}
 	std::array<ColorPalette::Color, 4> uiColorsArray;
 	std::copy_n(std::make_move_iterator(UIPreviewColors.begin()), uiColorsArray.size(), uiColorsArray.begin());
