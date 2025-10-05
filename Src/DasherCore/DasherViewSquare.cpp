@@ -55,7 +55,7 @@ CDasherViewSquare::CDasherViewSquare(CSettingsStore* pSettingsStore, CDasherScre
 		    parameter == LP_GEOMETRY)
 	    {
 		    m_bVisibleRegionValid = false;
-		    SetScaleFactor();
+		    ComputeScaleFactor();
 	    }
     });
 }
@@ -70,7 +70,7 @@ void CDasherViewSquare::SetOrientation(Options::ScreenOrientations newOrient)
 	if (newOrient == GetOrientation()) return;
 	CDasherView::SetOrientation(newOrient);
 	m_bVisibleRegionValid = false;
-	SetScaleFactor();
+	ComputeScaleFactor();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -176,7 +176,7 @@ CDasherNode* CDasherViewSquare::Render(CDasherNode* pRoot, myint iRootMin, myint
 /// specified as two co-ordinates, intended to the be the corners of
 /// the leading edge of the containing box.
 
-CDasherViewSquare::CTextString* CDasherViewSquare::DasherDrawText(myint iDasherMaxX, myint iDasherMidY, CDasherScreen::Label* pLabel, const ColorPalette::Color& Color)
+CDasherViewSquare::CTextString* CDasherViewSquare::DasherDrawText(myint iDasherMaxX, myint iDasherMidY, CDasherScreen::Label* pLabel, const ColorPalette::Color& Color) const
 {
 	screenint x, y;
 	Dasher2Screen(iDasherMaxX, iDasherMidY, x, y);
@@ -315,7 +315,7 @@ CDasherViewSquare::CTextString::~CTextString()
 	}
 }
 
-void CDasherViewSquare::TruncateTri(myint x, myint y1, myint y2, myint midy1, myint midy2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth)
+void CDasherViewSquare::TruncateTri(myint x, myint y1, myint y2, myint midy1, myint midy2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const
 {
 	DASHER_ASSERT(y1 <= midy1 && midy1 <= midy2 && midy2 <= y2);
 	
@@ -410,7 +410,7 @@ void CDasherViewSquare::TruncateTri(myint x, myint y1, myint y2, myint midy1, my
 
 #define sq(X) ((X)*(X))
 
-void CDasherViewSquare::Circle(myint Range, myint y1, myint y2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth)
+void CDasherViewSquare::Circle(myint Range, myint y1, myint y2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const
 {
 	std::vector<point> pts;
 	myint cy((y1 + y2) / 2), r(Range / 2), x1, x2;
@@ -465,7 +465,7 @@ void CDasherViewSquare::Circle(myint Range, myint y1, myint y2, const ColorPalet
 	delete[] p_array;
 }
 
-void CDasherViewSquare::CircleTo(myint cy, myint r, myint y1, myint x1, myint y3, myint x3, point dest, std::vector<point>& pts, double dXMul)
+void CDasherViewSquare::CircleTo(myint cy, myint r, myint y1, myint x1, myint y3, myint x3, point dest, std::vector<point>& pts, double dXMul) const
 {
 	myint y2((y1 + y3) / 2);
 	myint x2(static_cast<myint>(sqrt((sq(r) - sq(cy - y2)) * dXMul)));
@@ -485,7 +485,7 @@ void CDasherViewSquare::CircleTo(myint cy, myint r, myint y1, myint x1, myint y3
 }
 #undef sq
 
-void CDasherViewSquare::DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth)
+void CDasherViewSquare::DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth) const
 {
 	point p;
 	//start point
@@ -507,7 +507,7 @@ void CDasherViewSquare::DasherSpaceArc(myint cy, myint r, myint x1, myint y1, my
 	Screen()->Polyline(p_array, static_cast<int>(pts.size()), iLineWidth, color);
 }
 
-void CDasherViewSquare::Quadric(myint Range, myint lowY, myint highY, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth)
+void CDasherViewSquare::Quadric(myint Range, myint lowY, myint highY, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const
 {
 	static const double RR2 = 1.0 / sqrt(2.0);
 	const int midY = static_cast<int>((lowY + highY) / 2);
@@ -536,7 +536,7 @@ void CDasherViewSquare::Quadric(myint Range, myint lowY, myint highY, const Colo
 #undef NUM_STEPS
 }
 
-bool CDasherViewSquare::IsSpaceAroundNode(myint y1, myint y2)
+bool CDasherViewSquare::IsSpaceAroundNode(myint y1, myint y2) const
 {
 	const DasherCoordScreenRegion visibleRegion = VisibleRegion();
 	const myint maxX(y2 - y1);
@@ -730,7 +730,7 @@ void CDasherViewSquare::DisjointRender(CDasherNode* pRender, myint y1, myint y2,
 	}
 }
 
-void CDasherViewSquare::DasherDrawCube(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, CubeDepthLevel nodeDepth, CubeDepthLevel parentDepth, const ColorPalette::Color& Color, const ColorPalette::Color& outlineColor, int iThickness, ScreenRegion* parentScreenBounds)
+void CDasherViewSquare::DasherDrawCube(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, CubeDepthLevel nodeDepth, CubeDepthLevel parentDepth, const ColorPalette::Color& Color, const ColorPalette::Color& outlineColor, int iThickness, ScreenRegion* parentScreenBounds) const
 {
 	screenint iScreenMaxX, iScreenMinY, iScreenMinX, iScreenMaxY;
 	Dasher2Screen(iDasherMaxX, iDasherMinY, iScreenMaxX, iScreenMinY);
@@ -803,7 +803,7 @@ bool CDasherViewSquare::CoversCrosshair(myint Range, myint y1, myint y2)
 	return false;
 }
 
-ColorPalette::Color CDasherViewSquare::SimulateTransparency(CDasherNode* pCurrentNode)
+ColorPalette::Color CDasherViewSquare::SimulateTransparency(CDasherNode* pCurrentNode) const
 {
 	if(pCurrentNode == nullptr) return GetNamedColor(NamedColor::background);
 
@@ -881,7 +881,7 @@ void CDasherViewSquare::NewRender(CDasherNode* pCurrentNode, myint y1, myint y2,
 		const int line_width = labs(m_pSettingsStore->GetLongParameter(LP_OUTLINE_WIDTH));
 		const ColorPalette::Color& fill_color = line_width < 0 ? ColorPalette::noColor : (m_pSettingsStore->GetBoolParameter(BP_SIMULATE_TRANSPARENCY) ? SimulateTransparency(pCurrentNode) : pCurrentNode->getNodeColor(m_pColorPalette));
 		const ColorPalette::Color& outline_color = line_width == 0 ? ColorPalette::noColor : pCurrentNode->getOutlineColor(m_pColorPalette);
-
+		
 	    switch (m_pSettingsStore->GetLongParameter(LP_SHAPE_TYPE))
 		{
 		case Options::OVERLAPPING_RECTANGLE:
@@ -1008,7 +1008,7 @@ void CDasherViewSquare::NewRender(CDasherNode* pCurrentNode, myint y1, myint y2,
 /// just the inverse of the mapping used to calculate the screen
 /// positions of boxes etc.
 
-void CDasherViewSquare::Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY)
+void CDasherViewSquare::Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY) const
 {
 	// Things we're likely to need:
 
@@ -1041,7 +1041,7 @@ void CDasherViewSquare::Screen2Dasher(screenint iInputX, screenint iInputY, myin
 	iDasherY = iymap(iDasherY);
 }
 
-void CDasherViewSquare::SetScaleFactor(void)
+void CDasherViewSquare::ComputeScaleFactor()
 {
 	//Parameters for X non-linearity.
 	// Set some defaults here, in case we change(d) them later...
@@ -1141,7 +1141,7 @@ inline myint CDasherViewSquare::CustomIDivScaleFactor(myint iNumerator)
 	// return (iNumerator + iDenominator - 1) / iDenominator;
 }
 
-void CDasherViewSquare::Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY)
+void CDasherViewSquare::Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY) const
 {
 	// Apply the nonlinearities
 
@@ -1180,7 +1180,7 @@ void CDasherViewSquare::Dasher2Screen(myint iDasherX, myint iDasherY, screenint&
 	}
 }
 
-void CDasherViewSquare::Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta)
+void CDasherViewSquare::Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta) const
 {
 	iDasherX = xmap(iDasherX);
 	iDasherY = ymap(iDasherY);
@@ -1194,7 +1194,7 @@ void CDasherViewSquare::Dasher2Polar(myint iDasherX, myint iDasherY, double& r, 
 	r = sqrt(x * x + y * y);
 }
 
-void CDasherViewSquare::DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints)
+void CDasherViewSquare::DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints) const
 {
 	if (x1 != x2 && y1 != y2)
 	{
@@ -1264,7 +1264,7 @@ void CDasherViewSquare::DasherLine2Screen(myint x1, myint y1, myint x2, myint y2
 	vPoints.push_back(p);
 }
 
-CDasherView::DasherCoordScreenRegion CDasherViewSquare::VisibleRegion()
+CDasherView::DasherCoordScreenRegion CDasherViewSquare::VisibleRegion() const
 {
 	if (!m_bVisibleRegionValid)
 	{
@@ -1299,7 +1299,7 @@ CDasherView::DasherCoordScreenRegion CDasherViewSquare::VisibleRegion()
 void CDasherViewSquare::ScreenResized(CDasherScreen* NewScreen)
 {
 	m_bVisibleRegionValid = false;
-	SetScaleFactor();
+	ComputeScaleFactor();
 }
 
 /// Draw the crosshair

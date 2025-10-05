@@ -58,29 +58,29 @@ public:
 	///
 	/// Convert a screen co-ordinate to Dasher co-ordinates
 	///
-	void Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY) override;
+	void Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY) const override;
 
 	///
 	/// Convert Dasher co-ordinates to screen co-ordinates
 	///
-	void Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY) override;
+	void Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY) const override;
 
 	///
 	/// Convert Dasher co-ordinates to polar co-ordinates (r,theta), with 0<r<1, 0<theta<2*pi
 	///
-	void Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta) override;
+	void Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta) const override;
 
 	///
 	/// Return true if there is any space around a node spanning y1 to y2
 	/// and the screen boundary; return false if such a node entirely encloses
 	/// the screen boundary
 	///
-	bool IsSpaceAroundNode(myint y1, myint y2) override;
+	bool IsSpaceAroundNode(myint y1, myint y2) const override;
 
 	///
 	/// Get the bounding box of the visible region.
 	///
-	DasherCoordScreenRegion VisibleRegion() override;
+	DasherCoordScreenRegion VisibleRegion() const override;
 
 	///
 	/// Render all nodes, inc. blanking around the root (supplied)
@@ -89,15 +89,14 @@ public:
 
 	/// @}
 
-	void DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth) override;
+	void DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth) const override;
 
 private:
 	///draw a possibly-truncated triangle given dasher-space coords & accounting for non-linearity
 	/// @param x = max dasher-x extent
 	/// @param y1, y2 = dasher-y extent along y-axis
 	/// @param midy1,midy2 = extent along line of max x (midy1==midy2 => triangle, midy1<midy2 => truncated tri)
-	void TruncateTri(myint x, myint y1, myint y2, myint midy1, myint midy2, const ColorPalette::Color& fillColor, const ColorPalette::Color&
-                     outlineColor, int lineWidth);
+	void TruncateTri(myint x, myint y1, myint y2, myint midy1, myint midy2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const;
 
 	/// compute screen coords for a circle, centered on y-axis, between two points
 	/// cy, r - dasher coords of center (on y-axis), radius
@@ -106,13 +105,12 @@ private:
 	/// dest - point (x2,y2) in screen coords
 	/// pts - vector into which to store points; on entry, last element should already be screen-coords of (x1,y1)
 	/// dXMul - multiply x coords (in dasher space) by this (i.e. aspect ratio), for ovals
-	void CircleTo(myint cy, myint r, myint y1, myint x1, myint y3, myint x3, point dest, std::vector<point>& pts, double dXMul);
-	void Circle(myint Range, myint y1, myint y2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth);
-	void Quadric(myint Range, myint lowY, myint highY, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int
-                 lineWidth);
+	void CircleTo(myint cy, myint r, myint y1, myint x1, myint y3, myint x3, point dest, std::vector<point>& pts, double dXMul) const;
+	void Circle(myint Range, myint y1, myint y2, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const;
+	void Quadric(myint Range, myint lowY, myint highY, const ColorPalette::Color& fillColor, const ColorPalette::Color& outlineColor, int lineWidth) const;
 	///draw isoceles triangle, with baseline from y1-y2 along y axis (x=0), and other point at (x,(y1+y2)/2)
 	/// (all in Dasher coords).
-	void Triangle(myint x, myint y1, myint y2, int fillColor, int outlineColor, int lineWidth);
+	void Triangle(myint x, myint y1, myint y2, int fillColor, int outlineColor, int lineWidth) const;
 
 	class CTextString
 	{
@@ -150,7 +148,7 @@ private:
 	///
 	/// Draw text specified in Dasher co-ordinates
 	///
-	CTextString* DasherDrawText(myint iDasherMaxX, myint iDasherMidY, CDasherScreen::Label* pLabel, const ColorPalette::Color& Color);
+	CTextString* DasherDrawText(myint iDasherMaxX, myint iDasherMidY, CDasherScreen::Label* pLabel, const ColorPalette::Color& Color) const;
 
 	///
 	/// (Recursively) render a node and all contained subnodes, in disjoint rects.
@@ -161,7 +159,7 @@ private:
 
 	void DasherDrawCube(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, CubeDepthLevel nodeDepth, CubeDepthLevel
                         parentDepth, const ColorPalette::Color& Color, const ColorPalette::Color& outlineColor, int iThickness, ScreenRegion
-                        * parentScreenBounds);
+                        * parentScreenBounds) const;
 	/// (Recursively) render a node and all contained subnodes, in overlapping shapes
 	/// (according to LP_SHAPE_TYPE)
 	/// Each call responsible for rendering exactly the area contained within the node.
@@ -188,15 +186,15 @@ private:
 
 	inline void Crosshair();
 	bool CoversCrosshair(myint Range, myint y1, myint y2);
-    ColorPalette::Color SimulateTransparency(CDasherNode* pCurrentNode);
+    ColorPalette::Color SimulateTransparency(CDasherNode* pCurrentNode) const;
 
     //Divides by SCALE_FACTOR, rounding away from 0
-	inline myint CustomIDivScaleFactor(myint iNumerator);
+    static inline myint CustomIDivScaleFactor(myint iNumerator);
 
-	void DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints) override;
+	void DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints) const override;
 
 	// Called on screen size or orientation changes
-	void SetScaleFactor();
+	void ComputeScaleFactor();
 
 	// Parameters for x non-linearity
 	double m_dXlogCoeff;
@@ -209,10 +207,11 @@ private:
 	/// (Note the naming convention: iScaleFactorX/Y refers to X/Y in Dasher-space, which will be
 	/// the other way around to real screen coordinates if using a vertical (T-B/B-T) orientation)
 	myint iScaleFactorX, iScaleFactorY;
-	static const myint SCALE_FACTOR = 1 << 26; //was 100,000,000; change to power of 2 => easier to multiply/divide
+	static constexpr myint SCALE_FACTOR = 1 << 26; //was 100,000,000; change to power of 2 => easier to multiply/divide
 
-	bool m_bVisibleRegionValid = false;
-	DasherCoordScreenRegion m_visible_region;
+	//Cached for performance
+	mutable bool m_bVisibleRegionValid = false;
+	mutable DasherCoordScreenRegion m_visible_region;
 
 	CSettingsStore* m_pSettingsStore;
 };

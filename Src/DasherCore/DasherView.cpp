@@ -37,7 +37,7 @@ void CDasherView::ChangeScreen(CDasherScreen *NewScreen) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDasherView::DasherSpaceLine(myint x1, myint y1, myint x2, myint y2, int iWidth, const ColorPalette::Color& color) {
+void CDasherView::DasherSpaceLine(myint x1, myint y1, myint x2, myint y2, int iWidth, const ColorPalette::Color& color) const {
   if (!ClipLineToVisible(x1, y1, x2, y2)) return;
   std::vector<point> vPoints;
   point p;
@@ -49,7 +49,7 @@ void CDasherView::DasherSpaceLine(myint x1, myint y1, myint x2, myint y2, int iW
   Screen()->Polyline(pts, static_cast<int>(vPoints.size()), iWidth, color);
 }
 
-bool CDasherView::ClipLineToVisible(myint &x1, myint &y1, myint &x2, myint &y2) {
+bool CDasherView::ClipLineToVisible(myint &x1, myint &y1, myint &x2, myint &y2) const {
   if (x1 > x2) return ClipLineToVisible(x2,y2,x1,y1);
   //ok. have x1 <= x2...
   const CDasherView::DasherCoordScreenRegion vr = VisibleRegion();
@@ -87,7 +87,7 @@ bool CDasherView::ClipLineToVisible(myint &x1, myint &y1, myint &x2, myint &y2) 
 
 /// Draw a polyline specified in Dasher co-ordinates
 
-void CDasherView::DasherPolyline(myint *x, myint *y, int n, int iWidth, const ColorPalette::Color& color) {
+void CDasherView::DasherPolyline(myint *x, myint *y, int n, int iWidth, const ColorPalette::Color& color) const {
 
   point * ScreenPoints = new point[n];
 
@@ -100,7 +100,7 @@ void CDasherView::DasherPolyline(myint *x, myint *y, int n, int iWidth, const Co
 }
 
 // Draw a polyline with an arrow on the end
-void CDasherView::DasherPolyarrow(myint *x, myint *y, int n, int iWidth, const ColorPalette::Color& color, double dArrowSizeFactor) {
+void CDasherView::DasherPolyarrow(myint *x, myint *y, int n, int iWidth, const ColorPalette::Color& color, double dArrowSizeFactor) const {
 
   point * ScreenPoints = new point[n+3];
 
@@ -124,7 +124,7 @@ void CDasherView::DasherPolyarrow(myint *x, myint *y, int n, int iWidth, const C
 
 // Draw a box specified in Dasher co-ordinates
 
-void CDasherView::DasherDrawRectangle(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, const ColorPalette::Color& color, const ColorPalette::Color& outlineColor, int iThickness) {
+void CDasherView::DasherDrawRectangle(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, const ColorPalette::Color& color, const ColorPalette::Color& outlineColor, int iThickness) const {
   //This assertion is more aggressive than necessary (Dasher has been working
   // in many cases where it would fail, with only occassional display glitches)
   // so if it causes trouble, it should be safe to remove...
@@ -144,7 +144,7 @@ void CDasherView::DasherDrawRectangle(myint iDasherMaxX, myint iDasherMinY, myin
 
 /// Draw a rectangle centred on a given dasher co-ordinate, but with a size specified in screen co-ordinates (used for drawing the mouse blob)
 
-void CDasherView::DasherDrawCentredRectangle(myint iDasherX, myint iDasherY, screenint iSize, const ColorPalette::Color& color, const ColorPalette::Color& outlineColor, bool bDrawOutline) {
+void CDasherView::DasherDrawCentredRectangle(myint iDasherX, myint iDasherY, screenint iSize, const ColorPalette::Color& color, const ColorPalette::Color& outlineColor, bool bDrawOutline) const {
   screenint iScreenX;
   screenint iScreenY;
 

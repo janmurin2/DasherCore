@@ -63,20 +63,20 @@ public:
 	/// Convert a screen co-ordinate to Dasher co-ordinates
 	///
 
-	virtual void Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY) = 0;
+	virtual void Screen2Dasher(screenint iInputX, screenint iInputY, myint& iDasherX, myint& iDasherY) const = 0;
 
 	///
 	/// Convert Dasher co-ordinates to screen co-ordinates
 	///
 
-	virtual void Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY) = 0;
+	virtual void Dasher2Screen(myint iDasherX, myint iDasherY, screenint& iScreenX, screenint& iScreenY) const = 0;
 
 	///
 	/// Convert Dasher co-ordinates to polar co-ordinates (r,theta), with 0<r<1, 0<theta<2*pi
 	///
-	virtual void Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta) = 0;
+	virtual void Dasher2Polar(myint iDasherX, myint iDasherY, double& r, double& theta) const = 0;
 
-	virtual bool IsSpaceAroundNode(myint y1, myint y2) =0;
+	virtual bool IsSpaceAroundNode(myint y1, myint y2) const = 0;
 
 	// ScreenRegion in DasherCoords
 	struct DasherCoordScreenRegion
@@ -94,7 +94,7 @@ public:
 		Dasher::screenint maxX;
 		Dasher::screenint maxY;
 	};
-	virtual DasherCoordScreenRegion VisibleRegion() = 0;
+	virtual DasherCoordScreenRegion VisibleRegion() const = 0;
 
 	/// @}
 
@@ -136,7 +136,7 @@ public:
 	/// @param pRoot outermost node to render. should cover screen if possible;
 	/// function will blank out around it (in white) if not
 	/// @return the innermost node covering the crosshair
-	virtual CDasherNode* Render(CDasherNode* pRoot, myint iRootMin, myint iRootMax, CExpansionPolicy& policy) =0;
+	virtual CDasherNode* Render(CDasherNode* pRoot, myint iRootMin, myint iRootMax, CExpansionPolicy& policy) = 0;
 
 	/// @}
 
@@ -153,15 +153,15 @@ public:
 	/// @{
 
 	///Draw a straight line in Dasher-space - which may be curved on the screen...
-	void DasherSpaceLine(myint x1, myint y1, myint x2, myint y2, int iWidth, const ColorPalette::Color& color);
+	void DasherSpaceLine(myint x1, myint y1, myint x2, myint y2, int iWidth, const ColorPalette::Color& color) const;
 
-    virtual void DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth) =0;
+    virtual void DasherSpaceArc(myint cy, myint r, myint x1, myint y1, myint x2, myint y2, const ColorPalette::Color& color, int iLineWidth) const = 0;
 
 	///
 	/// Draw a polyline specified in Dasher co-ordinates
 	///
 
-	void DasherPolyline(myint* x, myint* y, int n, int iWidth, const ColorPalette::Color& color);
+	void DasherPolyline(myint* x, myint* y, int n, int iWidth, const ColorPalette::Color& color) const;
 
 	/// Draw a polyarrow
 	/// The parameters x and y allow the client to specify points in Dasher space
@@ -178,7 +178,7 @@ public:
 	/// \param color line color, as per Polyline (-1 => use "default" 0)
 	/// \param dArrowSizeFactor - the factor by which to scale the "hat" on the arrow
 	///
-	void DasherPolyarrow(myint* x, myint* y, int n, int iWidth, const ColorPalette::Color& color, double dArrowSizeFactor = 0.7071);
+	void DasherPolyarrow(myint* x, myint* y, int n, int iWidth, const ColorPalette::Color& color, double dArrowSizeFactor = 0.7071) const;
 
 	///
 	/// Draw a rectangle specified in Dasher co-ordinates
@@ -187,7 +187,7 @@ public:
 	/// \param iThickness line width for outline, < 1 => no outline.
 	///
 	void DasherDrawRectangle(myint iDasherMaxX, myint iDasherMinY, myint iDasherMinX, myint iDasherMaxY, const ColorPalette::Color& color, const
-                             ColorPalette::Color& outlineColor, int iThickness);
+                             ColorPalette::Color& outlineColor, int iThickness) const;
 
 	///
 	/// Draw a centred rectangle specified in Dasher co-ordinates (used for mouse cursor)
@@ -196,7 +196,7 @@ public:
 	///
 
 	void DasherDrawCentredRectangle(myint iDasherX, myint iDasherY, screenint iSize, const ColorPalette::Color& color, const ColorPalette::Color&
-                                    outlineColor, bool bDrawOutline);
+                                    outlineColor, bool bDrawOutline) const;
 
 	/// Set a color scheme
 	///
@@ -211,7 +211,7 @@ public:
 	/// by intersecting with all boundaries.
 	/// \return true if any part of the line was within the visible region; in this case, (x1,y1)-(x2,y2) delineate exactly that part
 	/// false if the line would be entirely outside the visible region; x1, y1, x2, y2 undefined.
-	bool ClipLineToVisible(myint& x1, myint& y1, myint& x2, myint& y2);
+	bool ClipLineToVisible(myint& x1, myint& y1, myint& x2, myint& y2) const;
 
 protected:
 	///Convert a straight line in Dasher-space, to coordinates for a corresponding polyline on the screen
@@ -221,7 +221,7 @@ protected:
 	/// \param vPoints vector to which to add screen points. Note that at the point that DasherLine2Screen is called,
 	/// the screen coordinates of the first point should already have been added to this vector; DasherLine2Screen
 	/// will then add exactly one point for each line segment required.
-	virtual void DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints) =0;
+	virtual void DasherLine2Screen(myint x1, myint y1, myint x2, myint y2, std::vector<point>& vPoints) const = 0;
 
 	const ColorPalette* m_pColorPalette = nullptr;
 private:
