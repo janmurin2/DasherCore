@@ -62,6 +62,7 @@ namespace Dasher {
             Color operator+ (const Color& b) const;
 			bool isFullyTransparent() const {return Alpha == 0;}
 			bool isFullyOpaque() const {return Alpha == 255;}
+			Color toGrayScale() const;
 
 			//self * (1 - a) + ColorB * a
 			Color lerp(const Color& ColorB, float a) const;

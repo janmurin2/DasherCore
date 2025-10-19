@@ -53,6 +53,12 @@ ColorPalette::Color ColorPalette::Color::operator+(const Color& b) const
     return {Red + b.Red, Green + b.Green, Blue + b.Blue, Alpha + b.Alpha};
 }
 
+ColorPalette::Color ColorPalette::Color::toGrayScale() const
+{
+    const int avg = (this->Red + this->Blue + this->Green) / 3;
+    return ColorPalette::Color(avg, avg, avg, this->Alpha);
+}
+
 ColorPalette::Color ColorPalette::Color::lerp(const Color& ColorB, float a) const
 {
     return lerp(ColorB, *this, a);
