@@ -13,8 +13,7 @@ void CStylusFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
   CDefaultFilter::GetUISettings(List);
   AddSettings(List, {LP_ZOOMSTEPS, LP_S, LP_MAXZOOM, LP_TAP_TIME});
 
-  RemoveDeclaredSetting(List, Dasher::Parameter::BP_MOUSEPOS_MODE);
-  RemoveDeclaredSetting(List, Dasher::Parameter::BP_CIRCLE_START);
+  RemoveDeclaredSetting(List, Dasher::Parameter::LP_START_MODE);
 }
 
 CStylusFilter::CStylusFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName)

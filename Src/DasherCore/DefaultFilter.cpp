@@ -9,6 +9,7 @@
 #include "CircleStartHandler.h"
 #include "DasherTypes.h"
 #include "ModuleSettings.h"
+#include "Parameters.h"
 #include "TwoBoxStartHandler.h"
 
 using namespace Dasher;
@@ -38,7 +39,7 @@ static SModuleSettings sSettings[] = {
 
 void CDefaultFilter::GetUISettings(std::vector<Dasher::Parameter>& List) {
     CDynamicFilter::GetUISettings(List);
-    AddSettings(List, {BP_DRAW_MOUSE_LINE,BP_DRAW_MOUSE,BP_CURVE_MOUSE_LINE,BP_START_MOUSE,BP_START_SPACE,BP_MOUSEPOS_MODE,BP_TURBO_MODE,BP_AUTOCALIBRATE,BP_REMAP_XTREME,BP_CIRCLE_START,BP_STOP_OUTSIDE,LP_LINE_WIDTH,LP_TARGET_OFFSET,LP_GEOMETRY});
+    AddSettings(List, {BP_DRAW_MOUSE_LINE,BP_DRAW_MOUSE,BP_CURVE_MOUSE_LINE,BP_START_MOUSE,BP_START_SPACE,BP_TURBO_MODE,BP_AUTOCALIBRATE,BP_REMAP_XTREME,LP_START_MODE,BP_STOP_OUTSIDE,LP_LINE_WIDTH,LP_TARGET_OFFSET,LP_GEOMETRY});
 }
 
 bool CDefaultFilter::GetSettings(SModuleSettings** sets, int* iCount)
@@ -66,8 +67,7 @@ CDefaultFilter::CDefaultFilter(CSettingsStore* pSettingsStore, CDasherInterfaceB
     {
         switch (p)
         {
-        case BP_CIRCLE_START:
-        case BP_MOUSEPOS_MODE:
+        case LP_START_MODE:
             CreateStartHandler();
             break;
         case BP_TURBO_MODE:
@@ -275,11 +275,14 @@ void CDefaultFilter::Deactivate()
 
 CStartHandler* CDefaultFilter::MakeStartHandler()
 {
-    if (m_pSettingsStore->GetBoolParameter(BP_CIRCLE_START))
-        return new CCircleStartHandler(this);
-    if (m_pSettingsStore->GetBoolParameter(BP_MOUSEPOS_MODE))
-        return new CTwoBoxStartHandler(this, m_pSettingsStore);
-    return NULL;
+    switch (m_pSettingsStore->GetLongParameter(LP_START_MODE)) {
+        case Dasher::Options::StartMode::circle_start:
+            return new CCircleStartHandler(this);
+        case Dasher::Options::StartMode::mouse_pos_start:
+            return new CTwoBoxStartHandler(this, m_pSettingsStore);
+        default:
+            return nullptr;
+    }
 }
 
 double xmax(double y)

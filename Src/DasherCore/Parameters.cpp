@@ -11,7 +11,6 @@ namespace Dasher{
 		{BP_CURVE_MOUSE_LINE      , Parameter_Value{"CurveMouseLine"       , PARAM_BOOL, Persistence::PERSISTENT, false, "Curve mouse line according to screen nonlinearity", "", Settings::UIControlType::Switch}},
 		{BP_START_MOUSE           , Parameter_Value{"StartOnLeft"          , PARAM_BOOL, Persistence::PERSISTENT, true , "StartOnLeft", "", Settings::UIControlType::Switch}},
 		{BP_START_SPACE           , Parameter_Value{"StartOnSpace"         , PARAM_BOOL, Persistence::PERSISTENT, false, "StartOnSpace", "", Settings::UIControlType::Switch}},
-		{BP_MOUSEPOS_MODE         , Parameter_Value{"StartOnMousePosition" , PARAM_BOOL, Persistence::PERSISTENT, false, "StartOnMousePosition", "", Settings::UIControlType::Switch}},
 		{BP_PALETTE_CHANGE        , Parameter_Value{"PaletteChange"        , PARAM_BOOL, Persistence::PERSISTENT, false , "Switch from color palette in setting automatically to the one provided in the alphabet"}},
 		{BP_TURBO_MODE            , Parameter_Value{"TurboMode"            , PARAM_BOOL, Persistence::PERSISTENT, true , "Boost speed when holding key1 or right mouse button", "", Settings::UIControlType::Switch}},
 		{BP_SMOOTH_PRESS_MODE     , Parameter_Value{"SmoothPressMode"      , PARAM_BOOL, Persistence::PERSISTENT, true , "Use Press-Input in the Smoothing-Input-Filter", "", Settings::UIControlType::Switch}},
@@ -23,7 +22,6 @@ namespace Dasher{
 		{BP_REMAP_XTREME          , Parameter_Value{"RemapXtreme"          , PARAM_BOOL, Persistence::PERSISTENT, false, "Pointer at extreme Y translates more and zooms less", "", Settings::UIControlType::Switch}},
 		{BP_AUTO_SPEEDCONTROL     , Parameter_Value{"AutoSpeedControl"     , PARAM_BOOL, Persistence::PERSISTENT, true , "AutoSpeedControl", "", Settings::UIControlType::Switch}},
 		{BP_LM_ADAPTIVE           , Parameter_Value{"LMAdaptive"           , PARAM_BOOL, Persistence::PERSISTENT, true , "Whether language model should learn as you enter text"}},
-		{BP_CIRCLE_START          , Parameter_Value{"CircleStart"          , PARAM_BOOL, Persistence::PERSISTENT, false, "Start on circle mode", "", Settings::UIControlType::Switch}},
 		{BP_NONLINEAR_Y           , Parameter_Value{"NonlinearY"           , PARAM_BOOL, Persistence::PERSISTENT, true , "Apply nonlinearities to Y axis (i.e. compress top &amp; bottom)"}},
 		{BP_STOP_OUTSIDE          , Parameter_Value{"PauseOutside"         , PARAM_BOOL, Persistence::PERSISTENT, false, "Whether to stop when pointer leaves canvas area", "", Settings::UIControlType::Switch}},
 #ifdef TARGET_OS_IPHONE                              
@@ -48,6 +46,11 @@ namespace Dasher{
 		{LP_DASHER_FONTSIZE       , Parameter_Value{ "DasherFontSize"            , PARAM_LONG, Persistence::PERSISTENT, 22l    , "Font size reached at crosshair (in points)"}},
 		{LP_MESSAGE_FONTSIZE      , Parameter_Value{ "MessageFontSize"           , PARAM_LONG, Persistence::PERSISTENT, 14l   , "Size of font for messages (in points)"}},
 		{LP_SHAPE_TYPE            , Parameter_Value{ "RenderStyle"               , PARAM_LONG, Persistence::PERSISTENT, static_cast<long>(Options::OVERLAPPING_RECTANGLE), "Shapes to render in (see Options::Rendering_Shape_Types)"}},
+		{LP_START_MODE            , Parameter_Value{ "StartMode"                 , PARAM_LONG, Persistence::PERSISTENT, static_cast<long>(Options::StartMode::none), "Movement Starting Mode", "", Settings::UIControlType::Enum, {
+			{"None", Options::StartMode::none},
+			{"Circle Start", Options::StartMode::circle_start},
+			{"Mouse Positon Start", Options::StartMode::mouse_pos_start}
+		}}},
 		{LP_UNIFORM               , Parameter_Value{ "UniformTimes1000"          , PARAM_LONG, Persistence::PERSISTENT, 50l   , "UniformTimes1000"}},
 		{LP_MOUSEPOSDIST          , Parameter_Value{ "MousePositionBoxDistance"  , PARAM_LONG, Persistence::PERSISTENT, 50l   , "MousePositionBoxDistance"}},
 		{LP_PY_PROB_SORT_THRES    , Parameter_Value{ "PYProbabilitySortThreshold", PARAM_LONG, Persistence::PERSISTENT, 85l   , "Sort converted syms in descending probability order up to this percentage"}},

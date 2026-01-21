@@ -103,11 +103,12 @@ bool COneDimensionalFilter::GetSettings(SModuleSettings **pSettings, int *iCount
 }
 
 CStartHandler *COneDimensionalFilter::MakeStartHandler() {
-  if (m_pSettingsStore->GetBoolParameter(BP_CIRCLE_START)) {
-    
-    return new C1DCircleStartHandler(this, m_pSettingsStore);
+  switch (m_pSettingsStore->GetLongParameter(LP_START_MODE)) {
+    case Dasher::Options::StartMode::circle_start:
+      return new C1DCircleStartHandler(this, m_pSettingsStore);
+    default:
+      return CDefaultFilter::MakeStartHandler();
   }
-  return CDefaultFilter::MakeStartHandler();
 }
 
 C1DCircleStartHandler::C1DCircleStartHandler(COneDimensionalFilter* f, CSettingsStore* pSettingsStore): CCircleStartHandler(f), m_pSettingsStore(pSettingsStore)

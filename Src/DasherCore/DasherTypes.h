@@ -83,6 +83,8 @@ namespace Options
     enum RenderingShapeTypes { DISJOINT_RECTANGLE = 0, OVERLAPPING_RECTANGLE = 1, TRIANGLE = 2, TRUNCATED_TRIANGLE = 3, QUADRIC = 4, CIRCLE = 5, CUBE = 6 };
 
     enum ScreenGeometry {old_style = 0, square_no_xhair = 1, squish = 2, squish_and_log = 3};
+
+    enum StartMode {none = 0, circle_start = 1, mouse_pos_start = 2};
   }
 
 namespace Keys

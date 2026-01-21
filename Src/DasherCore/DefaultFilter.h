@@ -13,7 +13,7 @@ class CDefaultFilter : public CDynamicFilter {
   CDefaultFilter(CSettingsStore* pSettingsStore, CDasherInterfaceBase *pInterface, CFrameRate *pFramerate, const char *szName);
   ~CDefaultFilter() override;
 
-  /// Responds to changes in BP_START_MOUSE / BP_MOUSEPOS_MODE to create StartHandler
+  /// Responds to changes in LP_START_MODE to create StartHandler
   virtual void HandleParameterChange(Parameter parameter);
 
   bool DecorateView(CDasherView *pView, CDasherInput *pInput) override;
