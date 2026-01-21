@@ -25,6 +25,7 @@
 #include "ConversionManager.h"
 #include "DasherInterfaceBase.h"
 #include "DasherNode.h"
+#include "FileUtils.h"
 #include "NodeCreationManager.h"
 #include "LanguageModelling/PPMLanguageModel.h"
 #include "LanguageModelling/WordLanguageModel.h"
@@ -235,7 +236,7 @@ CWordGeneratorBase *CAlphabetManager::GetGameWords() {
     m_pInterface->FormatMessage("Note: GameTextFile setting specifies game sentences file '%s' but this does not exist", gtf.c_str());
   }
   pGen->setAcceptUser(false);
-  m_pInterface->ScanFiles(pGen, m_pAlphabet->GetTrainingFile());
+  Dasher::FileUtils::ScanFiles(pGen, m_pAlphabet->GetTrainingFile());
   if (pGen->HasLines()) return pGen;
   delete pGen;
   return NULL;

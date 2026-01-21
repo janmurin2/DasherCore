@@ -4,6 +4,7 @@
 
 #include <I18n.h>
 
+#include "FileUtils.h"
 #include "MandarinAlphMgr.h"
 #include "RoutingAlphMgr.h"
 
@@ -34,7 +35,7 @@ public:
 
 	bool ParseFile(const std::string& strFilename, bool bUser)
 	{
-		m_file_length = m_pInterface->GetFileSize(strFilename);
+		m_file_length = Dasher::FileUtils::GetFileSize(strFilename);
 		if (m_file_length == 0) return false;
 		return AbstractParser::ParseFile(strFilename, bUser);
 	}
@@ -112,7 +113,7 @@ CNodeCreationManager::CNodeCreationManager(
 	if (!pAlphInfo->GetTrainingFile().empty())
 	{
 		ProgressNotifier pn(pInterface, m_pTrainer);
-		pInterface->ScanFiles(&pn, pAlphInfo->GetTrainingFile());
+		Dasher::FileUtils::ScanFiles(&pn, pAlphInfo->GetTrainingFile());
 		if (!pn.has_parsed_from_user_dir())
 		{
 			///TRANSLATORS: These 3 messages will be displayed when the user has just chosen a new alphabet. The %s parameter will be the name of the alphabet.
