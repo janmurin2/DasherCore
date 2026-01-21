@@ -54,7 +54,7 @@ class CDynamicFilter : public CInputFilter {
   
   ///Calculates a multiplier by which to adjust our speed (for a given frame).
   /// Defalut implementation implements slow-start (i.e. a multiplier increasing
-  /// from zero to one over the slow-start-time) as well as by checking the speedMul
+  /// from 0.1 to 1 over the slow-start-time) as well as by checking the speedMul
   /// of the node under the cursor.
   virtual double FrameSpeedMul(CDasherModel *pModel, unsigned long iTime);
 

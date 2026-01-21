@@ -51,8 +51,10 @@ double CDynamicFilter::FrameSpeedMul(CDasherModel *pModel, unsigned long iTime) 
   CDasherNode *n = pModel->Get_node_under_crosshair();
   double d = n ? n->SpeedMul() : 1.0;
   if(m_pSettingsStore->GetBoolParameter(BP_SLOW_START)) {
-    if ((iTime - m_iStartTime) < static_cast<unsigned long>(m_pSettingsStore->GetLongParameter(LP_SLOW_START_TIME)))
-      d *= 0.1 * (1 + 9 * ((iTime - m_iStartTime) / static_cast<double>(m_pSettingsStore->GetLongParameter(LP_SLOW_START_TIME))));
+    const unsigned long timeSinceStart = iTime - m_iStartTime;
+    const unsigned long slowStartTime = m_pSettingsStore->GetLongParameter(LP_SLOW_START_TIME);
+    const double ratio = std::min(timeSinceStart / static_cast<double>(slowStartTime), 1.0);
+    d *= 0.1 + 0.9 * ratio;
   }
   //else, no slow start, or finished.
   return d;
