@@ -305,7 +305,7 @@ void CDasherInterfaceBase::HandleParameterChange(Parameter parameter) {
   }
 }
 
-void CDasherInterfaceBase::EnterGameMode(CGameModule *pGameModule) {
+void CDasherInterfaceBase::EnterGameMode() {
   DASHER_ASSERT(m_pGameModule == NULL);
   if (CWordGeneratorBase *pWords = m_pNCManager->GetAlphabetManager()->GetGameWords()) {
     m_pGameModule = CreateGameModule();
@@ -326,7 +326,6 @@ void CDasherInterfaceBase::LeaveGameMode() {
   //m_pNCManager->updateControl();
   SetBuffer(0);
 }
-
 
 void CDasherInterfaceBase::SetLockStatus(const std::string &strText, int iPercent) {
   std::string newMessage; //empty - what we want if iPercent==-1 (unlock)

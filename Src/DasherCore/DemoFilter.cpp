@@ -49,7 +49,7 @@ bool CDemoFilter::DecorateView(CDasherView *pView, CDasherInput *pInput) {
 }
 
 void CDemoFilter::Activate() {
-  m_pInterface->EnterGameMode(NULL);
+  m_pInterface->EnterGameMode();
   HandleEvent(LP_FRAMERATE); //just to make sure!
 }
 

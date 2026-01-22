@@ -382,13 +382,9 @@ public:
   /// clicks cancel, then the module should be deleted.)
   /// Note method is virtual, so subclasses can override e.g. to detect entering
   /// game mode (they should call this method, then check GetGameModule()).
-  /// \param pGameModule concrete instance of GameModule to use. This can be null,
-  /// in which case we will use the module returned by CreateGameModule (e.g.
-  /// this is done for demo filter). However
-  /// \param pGameModule newly-constructed GameModule to use, or NULL to use one
-  /// returned from CreateGameModule; in either case, will be deleted when we
-  /// leave game mode.
-  virtual void EnterGameMode(CGameModule *pGameModule);
+  /// We will use the module returned by CreateGameModule (e.g.
+  /// this is done for demo filter).
+  virtual void EnterGameMode();
   
   ///Exits game mode, including deleting the game module that was in use.
   /// virtual so subclasses can override to detect leaving game mode.
