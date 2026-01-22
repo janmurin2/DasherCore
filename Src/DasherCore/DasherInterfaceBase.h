@@ -483,16 +483,7 @@ private:
   Options::ScreenOrientations ComputeOrientation();
 
 private:
-  class WordSpeaker {
-  public:
-    WordSpeaker(CDasherInterfaceBase *pIntf);
-      ~WordSpeaker();
-  private:
-    ///builds up the word currently being entered
-    std::string m_strCurrentWord;
-    CDasherInterfaceBase* m_pInterface;
-  };
-  std::unique_ptr<WordSpeaker> m_pWordSpeaker;
+  std::string m_strCurrentWordToSpeak;
   
   /// @name Child components
   /// Various objects which are 'owned' by the core.

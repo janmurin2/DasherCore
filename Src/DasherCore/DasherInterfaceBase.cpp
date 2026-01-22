@@ -73,8 +73,7 @@ CDasherInterfaceBase::CDasherInterfaceBase(CSettingsStore *pSettingsStore) :
   m_pFramerate(std::make_unique<CFrameRate>(pSettingsStore)),
   m_pSettingsStore(pSettingsStore),
   m_pModuleManager(std::make_unique<CModuleManager>()),
-  m_pActionManager(std::make_unique<CActionManager>()),
-  m_pWordSpeaker(std::make_unique<WordSpeaker>(this))
+  m_pActionManager(std::make_unique<CActionManager>())
 {
 
     m_pSettingsStore->OnParameterChanged.Subscribe(this, [this](Parameter p)
@@ -154,6 +153,23 @@ CDasherInterfaceBase::CDasherInterfaceBase(CSettingsStore *pSettingsStore) :
      if(std::holds_alternative<long>(Action->newValue)) m_pSettingsStore->SetLongParameter(Action->parameter, std::get<long>(Action->newValue));
      if(std::holds_alternative<std::string>(Action->newValue)) m_pSettingsStore->SetStringParameter(Action->parameter, std::get<std::string>(Action->newValue));
   });
+
+  OnEditEvent.Subscribe(this, [this](CEditEvent::EditEventType type, const std::string& strText, CDasherNode*)
+  {
+    if (this->GetGameModule() || !m_pSettingsStore->GetBoolParameter(BP_SPEAK_WORDS) || !this->SupportsSpeech()) return;
+
+    if(type == CEditEvent::EDIT_OUTPUT) {
+      if (!strText.empty() && std::isspace(strText[0])) {
+        this->Speak(m_strCurrentWordToSpeak, false);
+        m_strCurrentWordToSpeak = "";
+      } else {
+        m_strCurrentWordToSpeak += strText;
+      }
+    }
+    else if(type == CEditEvent::EDIT_DELETE) {
+      m_strCurrentWordToSpeak = m_strCurrentWordToSpeak.substr(0, std::max(static_cast<std::string::size_type>(0), m_strCurrentWordToSpeak.size() - strText.size()));
+    }
+  });
 }
 
 void CDasherInterfaceBase::Realize(unsigned long ulTime) {
@@ -181,7 +197,6 @@ void CDasherInterfaceBase::Realize(unsigned long ulTime) {
   // TODO: Sort out log type selection
 
   const int iUserLogLevel = m_pSettingsStore->GetLongParameter(LP_USER_LOG_LEVEL_MASK);
-
   if(iUserLogLevel == 10)
     m_pUserLog = std::make_unique<CBasicLog>(m_pSettingsStore, this);
   else if (iUserLogLevel > 0)
@@ -216,8 +231,9 @@ CDasherInterfaceBase::~CDasherInterfaceBase() {
   m_pSettingsStore->OnParameterChanged.Unsubscribe(this);
   m_pSettingsStore->OnPreParameterChange.Unsubscribe(this);
   GetActionManager()->UnsubscribeAll(this);
+  OnEditEvent.Unsubscribe(this); // Word Speak Event
 
-  //WriteTrainFileFull();???
+  // //WriteTrainFileFull();???
   m_pDasherModel.reset(); // Needs to explicitly be deleted as else a crash occurs on close
 
   // When we destruct on shutdown, we'll output any detailed log file
@@ -284,9 +300,6 @@ void CDasherInterfaceBase::HandleParameterChange(Parameter parameter) {
   case LP_NODE_BUDGET:
     m_defaultPolicy.reset(new AmortizedPolicy(m_pDasherModel.get(),m_pSettingsStore->GetLongParameter(LP_NODE_BUDGET)));
     break;
-  case BP_SPEAK_WORDS:
-    m_pWordSpeaker.reset(m_pSettingsStore->GetBoolParameter(BP_SPEAK_WORDS) ? new WordSpeaker(this) : nullptr);
-    break;
   default:
     break;
   }
@@ -314,30 +327,6 @@ void CDasherInterfaceBase::LeaveGameMode() {
   SetBuffer(0);
 }
 
-CDasherInterfaceBase::WordSpeaker::WordSpeaker(CDasherInterfaceBase *pIntf) : m_pInterface(pIntf) {
-
-    m_pInterface->OnEditEvent.Subscribe(this, [this](CEditEvent::EditEventType type, const std::string & strText, CDasherNode*)
-    {
-        if (m_pInterface->GetGameModule()) return;
-        if(type == CEditEvent::EDIT_OUTPUT) {
-            if (m_pInterface->SupportsSpeech()) {
-                if (!strText.empty() && std::isspace(strText[0])) {
-                    m_pInterface->Speak(m_strCurrentWord, false);
-                    m_strCurrentWord="";
-                } else
-                    m_strCurrentWord += strText;
-            }
-        }
-        else if(type == CEditEvent::EDIT_DELETE) {
-            m_strCurrentWord = m_strCurrentWord.substr(0, std::max(static_cast<std::string::size_type>(0), m_strCurrentWord.size() - strText.size()));
-        }
-    });
-}
-
-CDasherInterfaceBase::WordSpeaker::~WordSpeaker()
-{
-    m_pInterface->OnEditEvent.Unsubscribe(this);
-}
 
 void CDasherInterfaceBase::SetLockStatus(const std::string &strText, int iPercent) {
   std::string newMessage; //empty - what we want if iPercent==-1 (unlock)
