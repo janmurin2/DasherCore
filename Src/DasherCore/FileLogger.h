@@ -11,13 +11,6 @@
 #include <map>
 #include <chrono>
 
-// Macro that lets us wrap log statements that we want compiled out of the code in non-debug builds
-#ifdef DEBUG_ONLY_LOGGING
-#define DEBUG_ONLY( s )     s
-#else
-#define DEBUG_ONLY( s )
-#endif
-
 // Macros that can be used to call a globally declared logging object.  These
 // would need to be modified if the global variable is named differently.  By
 // using these macros you are protected from using the logger if it hasn't
@@ -28,32 +21,6 @@
 // is due to the variable parameter list that logging can take to do printf
 // style output.  GCC supports variadic macros, but Visual Studio doesn't yet.
 //
-
-// General purpose version, a log level must be sent in prior to any variable
-// length parameter list.  Usage:
-//    LOG(("my favorite number is %d!", logDEBUG, 42))
-#define LOG( s )\
-  if (g_pLogger != NULL)\
-    g_pLogger->Log s ;
-
-// Debug only logging macro.  Usage:
-//    LOG(("my favorite number is %d!", 42))
-#define LOG_DEBUG( s )\
-  if (g_pLogger != NULL)\
-    g_pLogger->LogDebug s ;
-
-// Normal error message macro.  Usage:
-//    LOG(("errors number %d!", 42))
-#define LOG_ERROR( s )\
-  if (g_pLogger != NULL)\
-    g_pLogger->LogNormal s ;
-
-// Normal error message macro.  Usage:
-//    LOG(("plane %d crashed into plane %d!", 42, 24))
-#define LOG_CRITICAL( s )\
-  if (g_pLogger != NULL)\
-    g_pLogger->LogCritical s ;
-
 
 enum class eLogLevel
 {

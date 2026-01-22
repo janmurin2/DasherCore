@@ -63,7 +63,7 @@ CUserLog::CUserLog(CSettingsStore* pSettingsStore,
     m_pApplicationSpan = new CTimeSpan("Application", true);
 
     if (m_pApplicationSpan == NULL)
-        g_pLogger->LogNormal("CUserLog::CUserLog, failed to create m_pApplicationSpan!");
+        m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::CUserLog, failed to create m_pApplicationSpan!");
 
     // TODO: for the load test harness, we apparently need to create the object directly
     // without a settings store (which will break CSettingsObserver, etc.); and then,
@@ -211,7 +211,7 @@ void CUserLog::StartWriting()
     if (pTrial != NULL)
       pTrial->StartWriting();
     else
-      g_pLogger->LogNormal("CUserLog::StartWriting, failed to create new pTrial!");
+      m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::StartWriting, failed to create new pTrial!");
   }
 
   m_bIsWriting = true;
@@ -250,7 +250,7 @@ void CUserLog::StopWriting()
 
       if (pTrial == NULL)
       {
-        g_pLogger->LogNormal("CUserLog::StopWriting, pTrial was NULL!");
+        m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::StopWriting, pTrial was NULL!");
         return;
       }
 
@@ -266,13 +266,13 @@ void CUserLog::AddSymbols(Dasher::VECTOR_SYMBOL_PROB* vpNewSymbols, eUserLogEven
   if (!m_bIsWriting)
   {
     // StartWriting() wasn't called, so we'll do it implicitly now
-    g_pLogger->LogDebug("CUserLog::AddSymbols, StartWriting() not called?");
+    m_pInterface->GetGlobalApplicationLogger()->LogDebug("CUserLog::AddSymbols, StartWriting() not called?");
     StartWriting();
   }
 
   if (vpNewSymbols == NULL)
   {
-    g_pLogger->LogNormal("CUserLog::AddSymbols, vpNewSymbols was NULL!");
+    m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::AddSymbols, vpNewSymbols was NULL!");
     return;
   }
 
@@ -290,7 +290,7 @@ void CUserLog::AddSymbols(Dasher::VECTOR_SYMBOL_PROB* vpNewSymbols, eUserLogEven
     // We should have a pTrial object since StartWriting() should have been called before us
     if (pTrial == NULL)
     {
-      g_pLogger->LogNormal("CUserLog::AddSymbols, pTrial was NULL!");
+      m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::AddSymbols, pTrial was NULL!");
       return;
     }
 
@@ -308,7 +308,7 @@ void CUserLog::DeleteSymbols(int iNumToDelete, eUserLogEventType iEvent)
   if (!m_bIsWriting)
   {
     // StartWriting() wasn't called, so we'll do it implicitly now
-    g_pLogger->LogDebug("CUserLog::DeleteSymbols, StartWriting() not called?");
+    m_pInterface->GetGlobalApplicationLogger()->LogDebug("CUserLog::DeleteSymbols, StartWriting() not called?");
     StartWriting();
   }
 
@@ -330,7 +330,7 @@ void CUserLog::DeleteSymbols(int iNumToDelete, eUserLogEventType iEvent)
     // We should have a pTrial object since StartWriting() should have been called before us
     if (pTrial == NULL)
     {
-      g_pLogger->LogNormal("CUserLog::DeleteSymbols, pTrial was NULL!");
+      m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::DeleteSymbols, pTrial was NULL!");
       return;
     }
 
@@ -345,7 +345,7 @@ void CUserLog::NewTrial()
   if (m_bIsWriting)
   {
     // We should have called StopWriting(), but we'll do it here implicitly
-    g_pLogger->LogDebug("CUserLog::NewTrial, StopWriting() not called?");        
+    m_pInterface->GetGlobalApplicationLogger()->LogDebug("CUserLog::NewTrial, StopWriting() not called?");        
     StopWriting();
   }
 
@@ -448,7 +448,7 @@ void CUserLog::AddParam(const std::string& strName, const std::string& strValue,
 
   if (pNewParam == NULL)
   {
-    g_pLogger->LogNormal("CUserLog::AddParam, failed to create CUserLogParam object!");
+    m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::AddParam, failed to create CUserLogParam object!");
     return;
   }
 
@@ -578,7 +578,7 @@ void CUserLog::AddMouseLocationNormalized(int iX, int iY, bool bStoreIntegerRep,
       (m_sCanvasCoordinates.right == 0) &&
       (m_sCanvasCoordinates.top == 0))
     {
-      g_pLogger->LogNormal("CUserLog::AddMouseLocationNormalized, called before AddCanvasSize()?");
+      m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::AddMouseLocationNormalized, called before AddCanvasSize()?");
       return;
     }
 
@@ -782,14 +782,14 @@ CUserLogTrial* CUserLog::AddTrial()
       pTrial->Done();
   }
 
-  CUserLogTrial* pTrial = new CUserLogTrial(m_strCurrentTrialFilename);
+  CUserLogTrial* pTrial = new CUserLogTrial(m_strCurrentTrialFilename, m_pInterface->GetGlobalApplicationLogger());
   if (pTrial != NULL)
   {
     m_vpTrials.push_back(pTrial);
     PrepareNewTrial();
   }
   else
-    g_pLogger->LogNormal("CUserLog::AddTrial, failed to create CUserLogTrialSpeech!");
+    m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::AddTrial, failed to create CUserLogTrialSpeech!");
 
   return pTrial;
 }
@@ -834,7 +834,7 @@ std::string CUserLog::GetStartStopCycleStats()
 
   if (m_pCycleTimer == NULL)
   {
-    g_pLogger->LogNormal("CUserLog::GetStartStopCycleStats, cycle timer was NULL!");
+    m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::GetStartStopCycleStats, cycle timer was NULL!");
     return "";
   }
 
@@ -967,7 +967,7 @@ void CUserLog::PrepareNewTrial()
 
   }
   else
-    g_pLogger->LogNormal("CUserLog::PrepareNewTrial, failed to create CUserLogTrial");
+    m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::PrepareNewTrial, failed to create CUserLogTrial");
 }
 
 // Parameters can be marked to always end them at the cycle stats in short logging.
@@ -1072,7 +1072,7 @@ void CUserLog::UpdateParam(Parameter parameter, int iOptionMask)
     }       
   default:
     {
-      g_pLogger->LogNormal("CUserLog::UpdateParam, matched parameter %d but unknown type %d", parameter, GetParameterType(parameter));
+      m_pInterface->GetGlobalApplicationLogger()->LogNormal("CUserLog::UpdateParam, matched parameter %d but unknown type %d", parameter, GetParameterType(parameter));
       break;
     }
   };

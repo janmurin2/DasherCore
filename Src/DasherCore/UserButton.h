@@ -1,10 +1,7 @@
 #pragma once
 
-#include "FileLogger.h"
 #include <string>
 #include <vector>
-
-extern CFileLogger* g_pLogger;
 
 class CUserButton;
 

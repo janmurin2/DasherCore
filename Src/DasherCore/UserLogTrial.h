@@ -84,7 +84,7 @@ typedef std::vector<NavCycle*>::iterator     VECTOR_NAV_CYCLE_PTR_ITER;
 class CUserLogTrial
 {
 public:
-  CUserLogTrial(const std::string& strCurrentTrialFilename);
+  CUserLogTrial(const std::string& strCurrentTrialFilename, CFileLogger* GlobalFileLogger);
   ~CUserLogTrial();
 
   bool                        HasWritingOccured();
@@ -115,11 +115,11 @@ public:
   static DENSITY_GRID                 MergeGrids(int iGridSize, DENSITY_GRID pGridA, DENSITY_GRID pGridB);
 
 protected:
-  CTimeSpan*                          m_pSpan;
-  bool                                m_bWritingStart;
-  std::string                              m_strCurrentTrial;          // Stores information passed to us from the UserTrial app
-  WindowSize                          m_sWindowCoordinates;       // Records the window coordinates at the start of navigation
-  WindowSize                          m_sCanvasCoordinates;       // The size of our canvas during navigation
+  CTimeSpan*                          m_pSpan = nullptr;
+  bool                                m_bWritingStart = false;
+  std::string                              m_strCurrentTrial = "";          // Stores information passed to us from the UserTrial app
+  WindowSize                          m_sWindowCoordinates = {0,0,0,0};       // Records the window coordinates at the start of navigation
+  WindowSize                          m_sCanvasCoordinates = {0,0,0,0};       // The size of our canvas during navigation
   Dasher::VECTOR_SYMBOL_PROB          m_vHistory;                 // Tracks all the symbols, probs, display text entererd during this trial
   VECTOR_USER_LOG_PARAM_PTR           m_vpParams;                 // Stores general parameters we want stored in each trial tag in the XML
   VECTOR_NAV_CYCLE_PTR                m_vpNavCycles;
@@ -133,7 +133,6 @@ protected:
   std::string                      GetHistoryDisplay();
   double                      GetHistoryAvgBits();
   void                        StopPreviousTimer();
-  void                        InitMemberVars();
 
   NavCycle*                   GetCurrentNavCycle();
   NavCycle*                   AddNavCycle();
@@ -147,7 +146,8 @@ protected:
   std::string                      GetWindowCanvasXML(const std::string& strPrefix);
   std::string                      GetParamsXML(const std::string& strPrefix);
   std::string                      GetNavCyclesXML(const std::string& strPrefix);
-
+private:
+  CFileLogger* m_pGlobalFileLogger;
 };
 /// @}
 

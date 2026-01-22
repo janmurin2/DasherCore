@@ -36,8 +36,6 @@
 #include "XMLUtil.h"
 #include "SettingsStore.h"
 
-extern CFileLogger* g_pLogger;
-
 const int USER_LOG_DEFAULT_SIZE_TRIAL_XML   = 65536;    // How big we think the XML string representing a single trial will be
 const int LOG_MOUSE_EVERY_MS                = 200;      // How often to log the mouse position (-1 for never), the frequency is also depends on how often the WM_TIMER event fires in dasher
 

@@ -44,10 +44,10 @@ class CUserLogBase {
 protected:
   virtual void AddSymbols(Dasher::VECTOR_SYMBOL_PROB* pVectorNewSymbolProbs, eUserLogEventType iEvent = userLogEventMouse) = 0;
   virtual void DeleteSymbols(int iNumToDelete, eUserLogEventType iEvent = userLogEventMouse) = 0;  
+  Dasher::CDasherInterfaceBase* m_pInterface;
 private:
   std::vector<Dasher::SymbolProb> m_vAdded;
   int m_iNumDeleted;
-  Dasher::CDasherInterfaceBase* m_pInterface;
 };
 /// @}
 

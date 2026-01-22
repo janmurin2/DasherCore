@@ -64,8 +64,6 @@ const eLogLevel g_iLogLevel   = eLogLevel::logNORMAL;
 const int       g_iLogOptions = logTimeStamp | logDateStamp;
 #endif
 
-CFileLogger* g_pLogger = NULL;
-
 using namespace Dasher;
 
 CDasherInterfaceBase::CDasherInterfaceBase(CSettingsStore *pSettingsStore) :
@@ -82,7 +80,7 @@ CDasherInterfaceBase::CDasherInterfaceBase(CSettingsStore *pSettingsStore) :
     });
 
   // Global logging object we can use from anywhere
-  g_pLogger = new CFileLogger("dasher.log",
+  m_pGlobalApplicationLog = std::make_unique<CFileLogger>("dasher.log",
                               g_iLogLevel,
                               g_iLogOptions);
 
@@ -238,12 +236,6 @@ CDasherInterfaceBase::~CDasherInterfaceBase() {
 
   // When we destruct on shutdown, we'll output any detailed log file
   if(m_pUserLog) m_pUserLog->OutputFile();
-
-  if (g_pLogger != NULL) {
-    delete g_pLogger;
-    g_pLogger = NULL;
-  }
-
 }
 
 void CDasherInterfaceBase::HandleParameterChange(Parameter parameter) {

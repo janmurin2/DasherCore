@@ -108,6 +108,8 @@ public:
 
   CColorIO* GetColorIO(){return m_ColorIO.get();}
 
+  CFileLogger* GetGlobalApplicationLogger() const {return m_pGlobalApplicationLog.get();}
+
   //@}
 
   /// Called when a parameter changes - but *after* components have been notified.

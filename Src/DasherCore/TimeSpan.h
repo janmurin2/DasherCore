@@ -9,13 +9,9 @@
 
 #pragma once
 
-#include "FileLogger.h"
 #include <string>
 #include "SimpleTimer.h"
 #include <vector>
-
-
-extern CFileLogger* g_pLogger;
 
 class CTimeSpan;
 
