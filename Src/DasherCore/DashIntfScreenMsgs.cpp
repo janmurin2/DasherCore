@@ -106,6 +106,6 @@ void CDashIntfScreenMsgs::onUnpause(unsigned long lTime) {
   CDasherInterfaceBase::onUnpause(lTime);
 }
 
-CGameModule *CDashIntfScreenMsgs::CreateGameModule() {
-  return new CScreenGameModule(m_pSettingsStore, this, GetView(), m_pDasherModel);
+std::unique_ptr<CGameModule> CDashIntfScreenMsgs::CreateGameModule() {
+  return std::make_unique<CScreenGameModule>(m_pSettingsStore, this, GetView(), m_pDasherModel.get());
 }

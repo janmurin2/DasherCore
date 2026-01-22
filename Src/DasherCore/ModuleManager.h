@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -13,8 +14,12 @@ class CModuleManager {
  public:
     ~CModuleManager();
 
-    CDasherInput* RegisterInputDeviceModule(CDasherInput* pModule, bool makeDefault = false);
-    CInputFilter* RegisterInputMethodModule(CInputFilter* pModule, bool makeDefault = false);
+    //Externally Memory Managed Modules
+    void RegisterInputDeviceModule(CDasherInput* pModule, bool makeDefault = false);
+    void RegisterInputMethodModule(CInputFilter* pModule, bool makeDefault = false);
+    //Memory Managed Modules
+    void RegisterInputDeviceModule(std::unique_ptr<CDasherInput> pModule, bool makeDefault = false);
+    void RegisterInputMethodModule(std::unique_ptr<CInputFilter> pModule, bool makeDefault = false);
 
     CDasherInput* GetDefaultInputDevice();
     void SetDefaultInputDevice(CDasherInput *);
@@ -29,6 +34,8 @@ class CModuleManager {
  private:
     std::unordered_map<std::string, CDasherInput*> m_InputDeviceModules;
     std::unordered_map<std::string, CInputFilter*> m_InputMethodModules;
+    std::unordered_map<std::string, std::unique_ptr<CDasherInput>> m_ManagedInputDeviceModules;
+    std::unordered_map<std::string, std::unique_ptr<CInputFilter>> m_ManagedInputMethodModules;
 
     std::string m_sDefaultInputDevice;
     std::string m_sDefaultInputMethod;

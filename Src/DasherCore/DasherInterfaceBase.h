@@ -37,13 +37,14 @@
 #include "InputFilter.h"
 #include "ModuleManager.h"
 #include "FrameRate.h"
+#include "DasherModel.h"
+#include <memory>
 
 namespace Dasher {
   class CDasherScreen;
   class CDasherView;
   class CDasherInput;
   class CInputFilter;
-  class CDasherModel;
   class CSettingsStore;
   class CGameModule;
   class CDasherInterfaceBase;
@@ -105,7 +106,7 @@ public:
 
   std::vector<std::string> GetPermittedValues(Parameter parameter);
 
-  CColorIO* GetColorIO(){return m_ColorIO;}
+  CColorIO* GetColorIO(){return m_ColorIO.get();}
 
   //@}
 
@@ -312,8 +313,8 @@ public:
   CDasherInput *GetActiveInputDevice() {return m_pInput;}
   CInputFilter *GetActiveInputMethod() {return m_pInputFilter;}
   const CAlphInfo *GetActiveAlphabet();
-  CModuleManager* GetModuleManager(){return m_pModuleManager;}
-  CActionManager* GetActionManager(){return m_pActionManager;}
+  CModuleManager* GetModuleManager(){return m_pModuleManager.get();}
+  CActionManager* GetActionManager(){return m_pActionManager.get();}
 
   void StartShutdown();
 
@@ -362,28 +363,14 @@ public:
   /// required by the core. A derived class is created for each
   /// supported platform which implements these.
   // @{
-
-  ///
-  /// Obtain the size in bytes of a file
-  ///
-  int GetFileSize(const std::string& strFileName);
-
-	
-  ///Look for files, matching a filename pattern, in whatever system and/or user
-  /// locations as may exist - e.g. on disk, in app package, on web, whatever.
-  /// TODO, can we add a default implementation that looks on the Dasher website?
-  /// \param pattern string matching just filename (not path), potentially
-  /// including '*'s (as per glob)
-  ///
-  void ScanFiles(AbstractParser* parser, const std::string& strPattern);
   
   // @}
   
   ///Gets a pointer to the game module. This is the correct way to determine
   /// whether game mode is currently on or off.
   /// \return pointer to current game module, if game mode on; or null, if off.
-  CGameModule *GetGameModule() {
-    return m_pGameModule;
+  CGameModule* GetGameModule() {
+    return m_pGameModule.get();
   }
 
   ///Call to enter game mode. The correct procedure for UI activation of game
@@ -436,7 +423,7 @@ protected:
   /// subclass of CGameModule, perhaps by using platform-specific widgets (e.g.
   /// the edit box?). Note the view and model can be obtained by calling GetView()
   /// and reading m_pDasherModel, respectively
-  virtual CGameModule *CreateGameModule() = 0;
+  virtual std::unique_ptr<CGameModule> CreateGameModule() = 0;
 
   /// Draw a new Dasher frame, regardless of whether we're paused etc.
   /// \param iTime Current time in ms.
@@ -464,11 +451,11 @@ protected:
   /// but with the mouse precisely over the crosshair)
   virtual void onUnpause(unsigned long lTime);
   
-  CDasherView *GetView() {return m_pDasherView;}
+  CDasherView *GetView() {return m_pDasherView.get();}
   
-  CDasherModel * const m_pDasherModel;
+  std::unique_ptr<CDasherModel> m_pDasherModel;
   ///Framerate monitor; created in constructor, req'd for DynamicFilter subclasses
-  CFrameRate * const m_pFramerate;
+  std::unique_ptr<CFrameRate> m_pFramerate;
   
   ///We keep a reference to the (currently unique/global) SettingsStore with which
   /// this interface was created, as ClSet and ResetParameter need to access it.
@@ -476,7 +463,7 @@ protected:
 
 private:
   //The default expansion policy to use - an amortized policy depending on the LP_NODE_BUDGET parameter.
-  CExpansionPolicy *m_defaultPolicy;
+  std::unique_ptr<CExpansionPolicy> m_defaultPolicy;
 
   /// Provide a new CDasherInput input device object.
 
@@ -504,39 +491,41 @@ private:
     ///builds up the word currently being entered
     std::string m_strCurrentWord;
     CDasherInterfaceBase* m_pInterface;
-  } *m_pWordSpeaker;
+  };
+  std::unique_ptr<WordSpeaker> m_pWordSpeaker;
   
   /// @name Child components
   /// Various objects which are 'owned' by the core.
   /// @{
-  CDasherScreen *m_DasherScreen;
-  CDasherView *m_pDasherView;
-  CDasherInput *m_pInput;
-  CInputFilter* m_pInputFilter;
-  CModuleManager* m_pModuleManager;
-  CActionManager* m_pActionManager;
-  CAlphIO *m_AlphIO;
-  CColorIO *m_ColorIO;
-  CNodeCreationManager *m_pNCManager;
-  CUserLogBase *m_pUserLog;
+  CDasherScreen* m_DasherScreen = nullptr;
+  std::unique_ptr<CDasherView> m_pDasherView;
+  CDasherInput* m_pInput = nullptr;
+  CInputFilter* m_pInputFilter = nullptr;
+  std::unique_ptr<CModuleManager> m_pModuleManager;
+  std::unique_ptr<CActionManager> m_pActionManager;
+  std::unique_ptr<CAlphIO> m_AlphIO;
+  std::unique_ptr<CColorIO> m_ColorIO;
+  std::unique_ptr<CNodeCreationManager> m_pNCManager;
+  std::unique_ptr<CUserLogBase> m_pUserLog;
+  std::unique_ptr<CFileLogger> m_pGlobalApplicationLog;
 
   // the game mode module - only
   // initialized if game mode is enabled
-  CGameModule *m_pGameModule;
+  std::unique_ptr<CGameModule> m_pGameModule;
   /// @}
 
   ///If non-empty, Dasher is locked, and this is the message that should be displayed.
   std::string m_strLockMessage;
   /// (Cache) renderable version of previous; created only to render
   /// (so may still be NULL even if locked)
-  CDasherScreen::Label *m_pLockLabel;
+  CDasherScreen::Label* m_pLockLabel = nullptr;
 
   ///Whether a full redraw (inc of nodes) has been requested externally,
   /// via ScheduleRedraw, for the next frame
-  bool m_bRedrawScheduled;
+  bool m_bRedrawScheduled = false;
   
   ///Whether we moved anywhere in the last call to NewFrame.
-  bool m_bLastMoved;
+  bool m_bLastMoved = false;
 
   /// @}
 };
