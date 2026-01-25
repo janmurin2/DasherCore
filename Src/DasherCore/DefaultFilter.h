@@ -2,7 +2,7 @@
 
 #include "DynamicFilter.h"
 #include "AutoSpeedControl.h"
-#include "Common/ModuleSettings.h"
+#include "DasherCore/Common/ModuleSettings.h"
 #include "StartHandler.h"
 
 namespace Dasher {

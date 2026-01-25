@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "Common/Allocators/PooledAlloc.h"
+#include "DasherCore/Common/Allocators/PooledAlloc.h"
 #include "DasherCore/Alphabet/AlphInfo.h"
 #include "DasherCore/Alphabet/AlphabetMap.h"
 #include "LanguageModel.h"

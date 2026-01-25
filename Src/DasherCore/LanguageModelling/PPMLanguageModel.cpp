@@ -9,7 +9,7 @@
 #include "PPMLanguageModel.h"
 
 #include <cstring>
-#include "Common/myassert.h"
+#include "DasherCore/Common/myassert.h"
 
 using namespace Dasher;
 

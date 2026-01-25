@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Common/NoClones.h"
-#include "Common/Allocators/PooledAlloc.h"
+#include "DasherCore/Common/NoClones.h"
+#include "DasherCore/Common/Allocators/PooledAlloc.h"
 
 #include "DasherCore/DasherTypes.h"
 #include "LanguageModel.h"

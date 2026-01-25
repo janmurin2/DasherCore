@@ -11,7 +11,7 @@
 
 #include <climits>
 #include <fstream>
-#include "Common/myassert.h"
+#include "DasherCore/Common/myassert.h"
 using namespace Dasher;
 
 // static TCHAR debug[256];
