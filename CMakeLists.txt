@@ -24,30 +24,30 @@ add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Thirdparty/pugixml" EXCLUDE_FROM_ALL
 ###############################
 
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS
-    ${CMAKE_CURRENT_LIST_DIR}/Src/**/*.h
+    ${CMAKE_CURRENT_LIST_DIR}/src/**/*.h
 )
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
-    ${CMAKE_CURRENT_LIST_DIR}/Src/**/*.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/**/*.cpp
 )
 
 # Still in the library but not actively used anymore. Also not supported on all platforms
-list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/CannaConversionHelper.h")
-list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInputBase.h")
-list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInput.h")
-list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/CannaConversionHelper.cpp")
-list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInputBase.cpp")
-list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/Src/DasherCore/SocketInput.cpp")
+list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/CannaConversionHelper.h")
+list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/SocketInputBase.h")
+list(REMOVE_ITEM HEADER_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/SocketInput.h")
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/CannaConversionHelper.cpp")
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/SocketInputBase.cpp")
+list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_LIST_DIR}/src/DasherCore/SocketInput.cpp")
 
 ADD_library(DasherCore STATIC
 	${HEADER_FILES}
 	${SOURCE_FILES}
 )
 
-target_include_directories(DasherCore PUBLIC ${CMAKE_CURRENT_LIST_DIR}/Src/)
+target_include_directories(DasherCore PUBLIC ${CMAKE_CURRENT_LIST_DIR}/src/)
 
 add_dependencies(DasherCore pugixml)
 target_link_libraries(DasherCore pugixml)
 
-source_group(TREE ${CMAKE_CURRENT_LIST_DIR}/Src/ FILES ${HEADER_FILES} ${SOURCE_FILES})
+source_group(TREE ${CMAKE_CURRENT_LIST_DIR}/src/ FILES ${HEADER_FILES} ${SOURCE_FILES})
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT DasherCore)
