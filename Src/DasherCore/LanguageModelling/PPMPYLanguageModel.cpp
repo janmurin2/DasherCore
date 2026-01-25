@@ -13,8 +13,8 @@
 #include "PPMPYLanguageModel.h"
 #include "LanguageModel.h"
 #include "PPMLanguageModel.h"
-#include "DasherTypes.h"
-#include <myassert.h>
+#include "DasherCore/DasherTypes.h"
+#include "Common/myassert.h"
 
 using namespace Dasher;
 

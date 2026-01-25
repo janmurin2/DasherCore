@@ -7,11 +7,11 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include "DictLanguageModel.h"
-#include "../Alphabet/AlphabetMap.h"
+#include "DasherCore/Alphabet/AlphabetMap.h"
 
 #include <climits>
 #include <fstream>
-#include <myassert.h>
+#include "Common/myassert.h"
 using namespace Dasher;
 
 // static TCHAR debug[256];

@@ -8,12 +8,12 @@
 
 #pragma once
 
-#include "../../Common/NoClones.h"
-#include "../../Common/Allocators/PooledAlloc.h"
+#include "Common/NoClones.h"
+#include "Common/Allocators/PooledAlloc.h"
 
-#include "DasherTypes.h"
+#include "DasherCore/DasherTypes.h"
 #include "LanguageModel.h"
-#include "../SettingsStore.h"
+#include "DasherCore/SettingsStore.h"
 #include "stdlib.h"
 #include <vector>
 #include <fstream>

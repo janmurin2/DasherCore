@@ -2,8 +2,6 @@
 //
 // Copyright (c) 2005 David Ward
 
-#include "Common.h"
-
 #include "Trace.h"
 
 // Track memory leaks on Windows to the line that new'd the memory
@@ -23,7 +21,7 @@ static char THIS_FILE[] = __FILE__;
         // On Windows, send Trace to the Debug window in DevStudio
         // The ATL/MFC Trace application also picks up Trace when running
 
-#include "Windows.h"
+// #include "Windows.h"
 
 void DasherTraceOutputImpl(const char *pszFormat, va_list vargs) {
 	// TODO: Reimplement

@@ -6,7 +6,7 @@
 
 #include "DasherScreen.h"
 #include "DasherModel.h"
-#include "../Common/ModuleSettings.h"
+#include "Common/ModuleSettings.h"
 #include "DasherNode.h"
 #include "DasherView.h"
 #include "DasherTypes.h"

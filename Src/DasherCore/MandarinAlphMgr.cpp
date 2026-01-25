@@ -21,7 +21,7 @@
 #include "MandarinAlphMgr.h"
 
 #include <algorithm>
-#include <I18n.h>
+#include "Common/I18n.h"
 
 #include "LanguageModelling/PPMPYLanguageModel.h"
 #include "DasherInterfaceBase.h"

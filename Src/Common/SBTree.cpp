@@ -11,8 +11,8 @@
 
 SBTree::SBTree(int iValue) {
 	m_iValue = iValue;
-	m_pLeft = NULL;
-	m_pRight = NULL;
+	m_pLeft = nullptr;
+	m_pRight = nullptr;
 	m_iCount = 1;
 }
 
@@ -47,15 +47,15 @@ SBTree* SBTree::Delete(int iValue) {
 	if(iValue == m_iValue) {
 		if(!m_pLeft) {
 			SBTree *pOldRight = m_pRight;
-			m_pRight = NULL;
+			m_pRight = nullptr;
 			delete this;
 			return pOldRight;
 		}
 		else {
 			SBTree *pOldLeft = m_pLeft;
 			pOldLeft->SetRightMost(m_pRight);
-			m_pLeft = NULL;
-			m_pRight = NULL;
+			m_pLeft = nullptr;
+			m_pRight = nullptr;
 			delete this;
 			return pOldLeft;
 		}

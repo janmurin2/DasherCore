@@ -21,13 +21,13 @@
 #pragma once
 
 
-#include "../DasherTypes.h"
+#include "DasherCore/DasherTypes.h"
 #include "GroupInfo.h"
 
 #include <string>
 #include <vector>
 
-#include "Actions.h"
+#include "DasherCore/Actions.h"
 
 namespace Dasher {
   class CAlphInfo;

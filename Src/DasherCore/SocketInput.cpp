@@ -5,7 +5,7 @@
 // Linux-specific subclass of SocketInputBase: provides network socket control of Dasher cursor
 
 #ifndef _WIN32
-#include "../Common/Common.h"
+#include "Common/Common.h"
 
 #include "SocketInput.h"
 #include "SocketInputBase.h"

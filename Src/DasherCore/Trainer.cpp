@@ -1,8 +1,6 @@
 
 #include "Trainer.h"
 
-#include <I18n.h>
-
 #include <vector>
 #include <string>
 #include <istream>

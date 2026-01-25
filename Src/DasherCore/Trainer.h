@@ -2,8 +2,8 @@
 
 #include "Alphabet/AlphInfo.h"
 #include "AbstractXMLParser.h"
-#include "AlphabetMap.h"
-#include "LanguageModel.h"
+#include "DasherCore/Alphabet/AlphabetMap.h"
+#include "DasherCore/LanguageModelling/LanguageModel.h"
 
 namespace Dasher {
   class CTrainer : public AbstractParser {

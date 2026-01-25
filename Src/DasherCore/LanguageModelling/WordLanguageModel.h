@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "../../Common/Allocators/PooledAlloc.h"
+#include "Common/Allocators/PooledAlloc.h"
 #include "PPMLanguageModel.h"
-#include "../SettingsStore.h"
-#include "../Alphabet/AlphInfo.h"
-#include "../Alphabet/AlphabetMap.h"
+#include "DasherCore/SettingsStore.h"
+#include "DasherCore/Alphabet/AlphInfo.h"
+#include "DasherCore/Alphabet/AlphabetMap.h"
 
 #include <vector>
 #include <map>

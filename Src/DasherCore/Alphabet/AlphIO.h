@@ -20,10 +20,10 @@
 
 #pragma once
 
-#include "../AbstractXMLParser.h"
+#include "DasherCore/AbstractXMLParser.h"
 
-#include "../DasherTypes.h"
-#include "AlphInfo.h"
+#include "DasherCore/DasherTypes.h"
+#include "DasherCore/Alphabet/AlphInfo.h"
 
 #include <map>
 #include <pugixml.hpp>

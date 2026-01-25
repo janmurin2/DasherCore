@@ -8,7 +8,7 @@
 
 #include "RoutingPPMLanguageModel.h"
 
-#include <myassert.h>
+#include "Common/myassert.h"
 
 using namespace Dasher;
 

@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #endif
 
-#include "../DasherTypes.h"
+#include "DasherCore/DasherTypes.h"
 
 #include <vector>
 #include <string>
@@ -71,7 +71,7 @@ namespace Dasher {
 /// 
 /// IAM 08/2002
 
-#include "../Messages.h"
+#include "DasherCore/Messages.h"
 
 class Dasher::CAlphabetMap {
 

@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Alphabet/AlphabetMap.h"
-#include "AlphInfo.h"
+#include "DasherCore/Alphabet/AlphInfo.h"
 
 namespace Dasher {
 /**
