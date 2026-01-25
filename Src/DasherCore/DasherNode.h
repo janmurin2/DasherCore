@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "../Common/NoClones.h"
+#include "DasherCore/Common/NoClones.h"
 //Includes needed for used classes
 #include "NodeManager.h"
 #include "Alphabet/AlphabetMap.h"

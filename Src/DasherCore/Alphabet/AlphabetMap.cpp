@@ -12,8 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
-#include <I18n.h>
-#include <myassert.h>
+#include "DasherCore/Common/myassert.h"
 
 using namespace Dasher;
 

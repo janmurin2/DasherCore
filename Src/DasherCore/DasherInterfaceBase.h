@@ -31,7 +31,7 @@
 // Check that everything that is not self-contained within the GUI is covered.
 
 #include "Messages.h"
-#include "../Common/NoClones.h"
+#include "DasherCore/Common/NoClones.h"
 #include "Alphabet/AlphIO.h"
 #include "ColorIO.h"
 #include "InputFilter.h"

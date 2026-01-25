@@ -6,7 +6,7 @@
 
 #include "AlternatingDirectMode.h"
 
-#include <I18n.h>
+#include "DasherCore/Common/I18n.h"
 
 #include "DasherInterfaceBase.h"
 

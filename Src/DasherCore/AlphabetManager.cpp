@@ -20,8 +20,6 @@
 
 #include "AlphabetManager.h"
 
-#include <I18n.h>
-
 #include "ConversionManager.h"
 #include "DasherInterfaceBase.h"
 #include "DasherNode.h"

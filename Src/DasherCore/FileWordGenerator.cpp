@@ -1,6 +1,6 @@
 #include "FileWordGenerator.h"
 
-#include <myassert.h>
+#include "DasherCore/Common/myassert.h"
 
 using namespace Dasher;
 

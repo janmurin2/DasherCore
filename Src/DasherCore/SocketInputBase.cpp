@@ -3,7 +3,7 @@
 // (C) Copyright Seb Wills 2005
 #ifndef _WIN32
 
-#include "../Common/Common.h"
+#include "DasherCore/Common/Common.h"
 
 #include "SocketInputBase.h"
 

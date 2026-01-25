@@ -1,6 +1,6 @@
 #include "DefaultFilter.h"
 
-#include <I18n.h>
+#include "DasherCore/Common/I18n.h"
 #include <algorithm>
 #include <cmath>
 
@@ -8,7 +8,7 @@
 
 #include "CircleStartHandler.h"
 #include "DasherTypes.h"
-#include "ModuleSettings.h"
+#include "DasherCore/Common/ModuleSettings.h"
 #include "Parameters.h"
 #include "TwoBoxStartHandler.h"
 

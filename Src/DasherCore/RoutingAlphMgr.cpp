@@ -8,7 +8,6 @@
 
 #include "RoutingAlphMgr.h"
 
-#include <I18n.h>
 
 #include "DasherInterfaceBase.h"
 #include "LanguageModelling/RoutingPPMLanguageModel.h"

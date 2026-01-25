@@ -1,6 +1,6 @@
 #pragma once
-#include <DasherInterfaceBase.h>
-#include <Messages.h>
+#include "DasherCore/AbstractXMLParser.h"
+#include "DasherCore/Messages.h"
 #include <iostream>
 
 namespace Dasher {

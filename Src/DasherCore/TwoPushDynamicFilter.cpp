@@ -20,7 +20,7 @@
 
 #include "TwoPushDynamicFilter.h"
 
-#include <I18n.h>
+#include "DasherCore/Common/I18n.h"
 #include <cmath>
 
 #include "DasherInterfaceBase.h"

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "../Common/ModuleSettings.h"
+#include "DasherCore/Common/ModuleSettings.h"
 #include "Parameters.h"
 #include <algorithm>
 #include <vector>

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "AppSettingsHeader.h"
-#include "../DasherCore/Parameters.h"
+#include "DasherCore/Parameters.h"
 
 // This file is an include file purely for the purposes of
 // cross-platform consistency. IT WILL NOT LINK IF INCLUDED IN MORE

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "PPMLanguageModel.h"
-#include "DasherTypes.h"
+#include "DasherCore/DasherTypes.h"
 
 #include <vector>
 #include <utility>

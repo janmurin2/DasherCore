@@ -8,13 +8,13 @@
 
 #include "WordLanguageModel.h"
 #include "PPMLanguageModel.h"
-#include "../Alphabet/AlphabetMap.h"
+#include "DasherCore/Alphabet/AlphabetMap.h"
 
 
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <myassert.h>
+#include "DasherCore/Common/myassert.h"
 
 using namespace Dasher;
 

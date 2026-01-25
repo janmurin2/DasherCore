@@ -2,8 +2,6 @@
 #include "DasherInterfaceBase.h"
 #include "NodeCreationManager.h"
 
-#include <I18n.h>
-
 #include "FileUtils.h"
 #include "MandarinAlphMgr.h"
 #include "RoutingAlphMgr.h"
