@@ -28,10 +28,14 @@
 #include "LanguageModelling/PPMLanguageModel.h"
 #include "LanguageModelling/WordLanguageModel.h"
 #include "LanguageModelling/MixtureLanguageModel.h"
+#ifdef HAVE_KENLM
+#include "LanguageModelling/KenLMLanguageModel.h"
+#endif
 #include "LanguageModelling/CTWLanguageModel.h"
 #include "FileWordGenerator.h"
 
 #include <vector>
+#include <fstream>
 
 using namespace Dasher;
 
@@ -136,6 +140,42 @@ void CAlphabetManager::CreateLanguageModel() {
       break;
     case 4:
       m_pLanguageModel = new CCTWLanguageModel(m_pAlphabet->iEnd-1);
+      break;
+    case 5:
+#ifdef HAVE_KENLM
+    {
+      std::string modelPath;
+      const std::string baseName = "kenlm_" + m_pAlphabet->GetID();
+      const std::string genericName = "kenlm";
+      const char *exts[] = {".binary", ".bin"};
+      bool found = false;
+      for (const auto &base : {baseName, genericName}) {
+        for (const auto &ext : exts) {
+          std::string candidate = Dasher::FileUtils::GetFullFilenamePath(base + ext);
+          std::ifstream probe(candidate, std::ios::binary);
+          if (probe.is_open()) {
+            modelPath = candidate;
+            found = true;
+            break;
+          }
+        }
+        if (found) break;
+      }
+      if (!found) {
+        m_pLanguageModel = new CPPMLanguageModel(m_pSettingsStore, m_pAlphabet->iEnd - 1);
+        break;
+      }
+      auto *klm = new CKenLMLanguageModel(m_pAlphabet, modelPath, m_pAlphabet->iEnd - 1);
+      if (klm->IsLoaded()) {
+        m_pLanguageModel = klm;
+      } else {
+        delete klm;
+        m_pLanguageModel = new CPPMLanguageModel(m_pSettingsStore, m_pAlphabet->iEnd - 1);
+      }
+    }
+#else
+      m_pLanguageModel = new CPPMLanguageModel(m_pSettingsStore, m_pAlphabet->iEnd-1);
+#endif
       break;
   }
 }
